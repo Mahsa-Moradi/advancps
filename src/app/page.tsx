@@ -67,7 +67,7 @@ export default function Home() {
             <div className="h-9 w-9 rounded-full bg-linear-to-tr from-sky-400 via-cyan-300 to-emerald-300" />
             <div className="flex flex-col">
               <span className="text-sm font-semibold tracking-wide text-sky-200">
-                DT Valley
+              AdvanCPS
               </span>
               <span className="text-xs text-slate-400">
                 Digital Transformation Consulting
