@@ -500,37 +500,215 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Simple sections for structure */}
+        {/* Our Services Section */}
         <section
           id="services"
-          className="grid gap-8 bg-white p-12 py-20 md:grid-cols-3"
+          className="bg-slate-50 py-20"
         >
-          <div>
-            <h2 className="text-lg font-semibold tracking-wide text-slate-950">
-              Services
+          <div className="mx-auto max-w-6xl px-6 lg:px-10">
+            {/* Main Heading */}
+            <h2 className="mb-4 text-4xl font-bold text-slate-950 sm:text-5xl lg:text-6xl">
+              Our Services
             </h2>
-            <p className="mt-2 text-sm text-slate-700">
-              From early‑stage exploration to full deployment of digital twins
-              and system models.
+
+            {/* Introductory Text */}
+            <p className="mb-12 max-w-3xl text-base leading-relaxed text-slate-700 sm:text-lg">
+              We help companies move from idea to implementation, providing expertise that unlocks real business value. Our services are designed to be flexible, transparent, and always tailored to your unique context.
             </p>
-          </div>
-          <div className="space-y-2 text-sm text-slate-700">
-            <p className="font-semibold text-slate-950">
-              Model‑based systems engineering
-            </p>
-            <p>
-              Structure complex systems, define clear interfaces and guarantee
-              traceability of requirements.
-            </p>
-          </div>
-          <div className="space-y-2 text-sm text-slate-700">
-            <p className="font-semibold text-slate-950">
-              Simulation & digital twins
-            </p>
-            <p>
-              Validate design decisions and explore what‑if scenarios before you
-              invest in hardware.
-            </p>
+
+            {/* Service Cards Grid */}
+            <div className="mb-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {/* Card 1: Strategy & Roadmapping */}
+              <div className="relative rounded-2xl bg-teal-700 p-6">
+                <div className="mb-4 flex items-start gap-4">
+                  <svg
+                    className="h-8 w-8 shrink-0 text-yellow-400"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"
+                    />
+                  </svg>
+                  <div>
+                    <h3 className="mb-2 text-lg font-bold text-white">
+                      Strategy & Roadmapping
+                    </h3>
+                    <p className="text-sm leading-relaxed text-white/90">
+                      We evaluate your current capabilities and define a clear, actionable roadmap aligned with your business goals.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Card 2: Model Design & Development */}
+              <div className="relative rounded-2xl bg-teal-700 p-6">
+                <div className="mb-4 flex items-start gap-4">
+                  <svg
+                    className="h-8 w-8 shrink-0 text-yellow-400"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
+                    />
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                    />
+                  </svg>
+                  <div>
+                    <h3 className="mb-2 text-lg font-bold text-white">
+                      Model Design & Development
+                    </h3>
+                    <p className="text-sm leading-relaxed text-white/90">
+                      We design, prototype, and train AI models—tailored to your data and constraints—ensuring accuracy, efficiency, and fairness.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Card 3: Deployment & MLOps */}
+              <div className="relative rounded-2xl bg-teal-700 p-6">
+                <div className="mb-4 flex items-start gap-4">
+                  <svg
+                    className="h-8 w-8 shrink-0 text-yellow-400"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+                    />
+                  </svg>
+                  <div>
+                    <h3 className="mb-2 text-lg font-bold text-white">
+                      Deployment & MLOps
+                    </h3>
+                    <p className="text-sm leading-relaxed text-white/90">
+                      From testing to production, we build reliable, maintainable systems that integrate seamlessly into your existing infrastructure.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Card 4: Feasibility Audits & Advisory */}
+              <div className="relative rounded-2xl bg-teal-700 p-6">
+                <div className="mb-4 flex items-start gap-4">
+                  <svg
+                    className="h-8 w-8 shrink-0 text-yellow-400"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
+                    />
+                  </svg>
+                  <div>
+                    <h3 className="mb-2 text-lg font-bold text-white">
+                      Feasibility Audits & Advisory
+                    </h3>
+                    <p className="text-sm leading-relaxed text-white/90">
+                      We offer independent reviews of your solutions—assessing technical soundness, ethical concerns, and regulatory alignment.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Card 5: Workshops & Training */}
+              <div className="relative rounded-2xl bg-teal-700 p-6">
+                <div className="mb-4 flex items-start gap-4">
+                  <svg
+                    className="h-8 w-8 shrink-0 text-yellow-400"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                    />
+                  </svg>
+                  <div>
+                    <h3 className="mb-2 text-lg font-bold text-white">
+                      Workshops & Training
+                    </h3>
+                    <p className="text-sm leading-relaxed text-white/90">
+                      We enable your teams through workshops, hands-on sessions, and training programs customized to your data maturity level.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Card 6: Responsible AI & Governance */}
+              <div className="relative rounded-2xl bg-teal-700 p-6">
+                <div className="mb-4 flex items-start gap-4">
+                  <svg
+                    className="h-8 w-8 shrink-0 text-yellow-400"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3"
+                    />
+                  </svg>
+                  <div>
+                    <h3 className="mb-2 text-lg font-bold text-white">
+                      Responsible AI & Governance
+                    </h3>
+                    <p className="text-sm leading-relaxed text-white/90">
+                      We help you design and implement responsible AI practices—building trust, transparency, and accountability into your solutions.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Call to Action Button */}
+            <div className="flex justify-center">
+              <a
+                href="#contact"
+                className="flex items-center gap-2 rounded-lg border-2 border-yellow-400 bg-white px-6 py-3 text-base font-medium text-slate-950 transition hover:bg-yellow-400/10"
+              >
+                <svg
+                  className="h-5 w-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"
+                  />
+                </svg>
+                <span>Discover Our Expertise</span>
+              </a>
+            </div>
           </div>
         </section>
 
