@@ -274,6 +274,232 @@ export default function Home() {
           </div>
         </section>
 
+        {/* Our Approach Section */}
+        <section
+          id="process"
+          className="bg-white py-20"
+        >
+          <div className="mx-auto max-w-6xl px-6 lg:px-10">
+            {/* Main Heading */}
+            <h2 className="mb-8 text-4xl font-bold text-slate-950 sm:text-5xl lg:text-6xl">
+              Our Approach
+            </h2>
+
+            {/* Introductory Text */}
+            <div className="mb-12 space-y-6 text-left text-slate-700">
+              <p className="text-base leading-relaxed sm:text-lg">
+                At AdvanCPS, impactful solutions start with feasibility and context — your business, your data, and your constraints.
+              </p>
+              <p className="text-base leading-relaxed sm:text-lg">
+                We don't offer one-size-fits-all solutions. We lead with feasibility — aligning your goals, data, and constraints to the right technology and a clear path forward.
+              </p>
+            </div>
+
+            {/* Process Flow Diagram */}
+            <div className="mb-12 flex flex-wrap items-center justify-center gap-4 lg:gap-6">
+              {/* Step 1: Discover */}
+              <div className="relative flex flex-col items-center">
+                <div className="relative flex h-32 w-32 flex-col items-center justify-center rounded-2xl bg-teal-700 sm:h-40 sm:w-40">
+                  <span className="absolute right-2 top-2 text-2xl font-bold text-white/20 sm:text-3xl">
+                    01
+                  </span>
+                  <svg
+                    className="mb-2 h-8 w-8 text-yellow-400 sm:h-10 sm:w-10"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                    />
+                  </svg>
+                  <span className="text-sm font-medium text-white sm:text-base">
+                    Discover
+                  </span>
+                </div>
+              </div>
+
+              {/* Arrow */}
+              <div className="hidden text-slate-400 sm:block">
+                <svg
+                  className="h-6 w-6"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M9 5l7 7-7 7"
+                  />
+                </svg>
+              </div>
+
+              {/* Step 2: Design */}
+              <div className="relative flex flex-col items-center">
+                <div className="relative flex h-32 w-32 flex-col items-center justify-center rounded-2xl bg-teal-700 sm:h-40 sm:w-40">
+                  <span className="absolute right-2 top-2 text-2xl font-bold text-white/20 sm:text-3xl">
+                    02
+                  </span>
+                  <svg
+                    className="mb-2 h-8 w-8 text-yellow-400 sm:h-10 sm:w-10"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
+                    />
+                  </svg>
+                  <span className="text-sm font-medium text-white sm:text-base">
+                    Design
+                  </span>
+                </div>
+              </div>
+
+              {/* Arrow */}
+              <div className="hidden text-slate-400 sm:block">
+                <svg
+                  className="h-6 w-6"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M9 5l7 7-7 7"
+                  />
+                </svg>
+              </div>
+
+              {/* Step 3: Build */}
+              <div className="relative flex flex-col items-center">
+                <div className="relative flex h-32 w-32 flex-col items-center justify-center rounded-2xl bg-teal-700 sm:h-40 sm:w-40">
+                  <span className="absolute right-2 top-2 text-2xl font-bold text-white/20 sm:text-3xl">
+                    03
+                  </span>
+                  <svg
+                    className="mb-2 h-8 w-8 text-yellow-400 sm:h-10 sm:w-10"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M4 5a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM14 5a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1h-4a1 1 0 01-1-1V5zM4 15a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1H5a1 1 0 01-1-1v-4zM14 15a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1h-4a1 1 0 01-1-1v-4z"
+                    />
+                  </svg>
+                  <span className="text-sm font-medium text-white sm:text-base">
+                    Build
+                  </span>
+                </div>
+              </div>
+
+              {/* Arrow */}
+              <div className="hidden text-slate-400 sm:block">
+                <svg
+                  className="h-6 w-6"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M9 5l7 7-7 7"
+                  />
+                </svg>
+              </div>
+
+              {/* Step 4: Deploy */}
+              <div className="relative flex flex-col items-center">
+                <div className="relative flex h-32 w-32 flex-col items-center justify-center rounded-2xl bg-teal-700 sm:h-40 sm:w-40">
+                  <span className="absolute right-2 top-2 text-2xl font-bold text-white/20 sm:text-3xl">
+                    04
+                  </span>
+                  <svg
+                    className="mb-2 h-8 w-8 text-yellow-400 sm:h-10 sm:w-10"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M13 10V3L4 14h7v7l9-11h-7z"
+                    />
+                  </svg>
+                  <span className="text-sm font-medium text-white sm:text-base">
+                    Deploy
+                  </span>
+                </div>
+              </div>
+
+              {/* Arrow */}
+              <div className="hidden text-slate-400 sm:block">
+                <svg
+                  className="h-6 w-6"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M9 5l7 7-7 7"
+                  />
+                </svg>
+              </div>
+
+              {/* Step 5: Evolve */}
+              <div className="relative flex flex-col items-center">
+                <div className="relative flex h-32 w-32 flex-col items-center justify-center rounded-2xl bg-teal-700 sm:h-40 sm:w-40">
+                  <span className="absolute right-2 top-2 text-2xl font-bold text-white/20 sm:text-3xl">
+                    05
+                  </span>
+                  <svg
+                    className="mb-2 h-8 w-8 text-yellow-400 sm:h-10 sm:w-10"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+                    />
+                  </svg>
+                  <span className="text-sm font-medium text-white sm:text-base">
+                    Evolve
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* Concluding Text */}
+            <div className="text-left text-slate-700">
+              <p className="text-base leading-relaxed sm:text-lg">
+                From your first steps in AI and emerging technologies to scaling transformative projects, we ensure that innovation is built on clarity, trust, and measurable value.
+              </p>
+            </div>
+          </div>
+        </section>
+
         {/* Simple sections for structure */}
         <section
           id="services"
