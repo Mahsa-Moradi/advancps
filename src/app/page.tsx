@@ -201,6 +201,79 @@ export default function Home() {
           </div>
         </section>
 
+        {/* Intro / About Section */}
+        <section
+          id="about"
+          className="bg-slate-100 py-20"
+        >
+          <div className="mx-auto max-w-4xl px-6 lg:px-10">
+            {/* Main Heading */}
+            <div className="mb-8 text-center">
+              <h2 className="mb-4 text-5xl font-bold leading-tight tracking-tight text-slate-950 sm:text-6xl lg:text-7xl">
+                <span className="text-3xl font-normal sm:text-4xl lg:text-5xl">
+                  We are{" "}
+                </span>
+                <span className="font-bold">AdvanCPS</span>
+              </h2>
+              <p className="text-xl font-medium text-slate-800 sm:text-2xl">
+                AI-Minded. Expert Led. Innovation Driven.
+              </p>
+            </div>
+
+            {/* Descriptive Text */}
+            <div className="mb-12 space-y-6 text-left text-slate-700">
+              <p className="text-base leading-relaxed sm:text-lg">
+                At AdvanCPS, we turn complexity into clarity through state-of-the-art solutions. Rooted in deep expertise and driven by curiosity, we help future-focused companies unlock their full potential with tailored solutions and strategies for cutting-edge automation.
+              </p>
+              <p className="text-base leading-relaxed sm:text-lg">
+                We're not just consultants, we're partners in your digital evolution. From concept to deployment, our team blends academic rigor with real-world impact to ensure an intelligent, ethical and efficient solution.
+              </p>
+            </div>
+
+            {/* Call-to-Action Buttons */}
+            <div className="flex flex-wrap items-center justify-center gap-4">
+              <a
+                href="#process"
+                className="flex items-center gap-2 rounded-lg border-2 border-yellow-400 bg-transparent px-6 py-3 text-base font-medium text-slate-950 transition hover:bg-yellow-400/10"
+              >
+                <svg
+                  className="h-5 w-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M13 10V3L4 14h7v7l9-11h-7z"
+                  />
+                </svg>
+                <span>Explore Our Approach</span>
+              </a>
+              <a
+                href="#about"
+                className="flex items-center gap-2 rounded-lg border-2 border-yellow-400 bg-transparent px-6 py-3 text-base font-medium text-slate-950 transition hover:bg-yellow-400/10"
+              >
+                <svg
+                  className="h-5 w-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                  />
+                </svg>
+                <span>About us</span>
+              </a>
+            </div>
+          </div>
+        </section>
+
         {/* Simple sections for structure */}
         <section
           id="services"
