@@ -700,6 +700,70 @@ export default function Home() {
           </div>
         </section>
 
+        {/* CTA Banner Section */}
+        <section className="bg-white py-12">
+          <div className="mx-auto max-w-6xl px-6 lg:px-10">
+            <div className="flex flex-col items-center gap-6 rounded-2xl bg-teal-700 p-8 sm:flex-row sm:gap-8">
+              {/* Profile Picture */}
+              <div className="shrink-0">
+                <div className="h-24 w-24 overflow-hidden rounded-full border-4 border-white/20 sm:h-28 sm:w-28">
+                  <div className="flex h-full w-full items-center justify-center bg-slate-300">
+                    <svg
+                      className="h-12 w-12 text-slate-500"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                      />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+
+              {/* Text Content */}
+              <div className="flex-1 text-center sm:text-left">
+                <h3 className="mb-2 text-2xl font-bold text-white sm:text-3xl">
+                  Ready to move forward?
+                </h3>
+                <p className="mb-2 text-xl font-bold text-white sm:text-2xl">
+                  Let's build the future together!
+                </p>
+                <p className="text-sm text-white/90 sm:text-base">
+                  Get in touch for a call with our experts.
+                </p>
+              </div>
+
+              {/* Contact Button */}
+              <div className="shrink-0">
+                <a
+                  href="#contact"
+                  className="flex items-center gap-2 rounded-full border-2 border-yellow-400 bg-teal-700 px-6 py-3 text-base font-medium text-white transition hover:bg-teal-600"
+                >
+                  <svg
+                    className="h-5 w-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                    />
+                  </svg>
+                  <span>Contact us</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* Process overview */}
         <section
           id="process"
