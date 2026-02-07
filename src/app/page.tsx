@@ -970,7 +970,7 @@ export default function Home() {
       </main>
 
       {/* Footer */}
-      <footer className="bg-orange-400 py-12">
+      <footer className="bg-yellow-400 py-12">
         <div className="mx-auto max-w-6xl px-6 lg:px-10">
           {/* Logo */}
           <div className="mb-8 flex justify-center">
@@ -1091,7 +1091,7 @@ export default function Home() {
                   href="https://linkedin.com"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex h-10 w-10 items-center justify-center rounded-full border-2 border-slate-950 text-slate-950 transition hover:bg-slate-950 hover:text-orange-400"
+                  className="flex h-10 w-10 items-center justify-center rounded-full border-2 border-slate-950 text-slate-950 transition hover:bg-slate-950 hover:text-yellow-400"
                   aria-label="LinkedIn"
                 >
                   <svg
@@ -1106,7 +1106,7 @@ export default function Home() {
                   href="https://instagram.com"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex h-10 w-10 items-center justify-center rounded-full border-2 border-slate-950 text-slate-950 transition hover:bg-slate-950 hover:text-orange-400"
+                  className="flex h-10 w-10 items-center justify-center rounded-full border-2 border-slate-950 text-slate-950 transition hover:bg-slate-950 hover:text-yellow-400"
                   aria-label="Instagram"
                 >
                   <svg
@@ -1121,7 +1121,7 @@ export default function Home() {
                   href="https://youtube.com"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex h-10 w-10 items-center justify-center rounded-full border-2 border-slate-950 text-slate-950 transition hover:bg-slate-950 hover:text-orange-400"
+                  className="flex h-10 w-10 items-center justify-center rounded-full border-2 border-slate-950 text-slate-950 transition hover:bg-slate-950 hover:text-yellow-400"
                   aria-label="YouTube"
                 >
                   <svg
@@ -1134,7 +1134,7 @@ export default function Home() {
                 </a>
                 <a
                   href="#contact"
-                  className="flex h-10 w-10 items-center justify-center rounded-full border-2 border-slate-950 text-slate-950 transition hover:bg-slate-950 hover:text-orange-400"
+                  className="flex h-10 w-10 items-center justify-center rounded-full border-2 border-slate-950 text-slate-950 transition hover:bg-slate-950 hover:text-yellow-400"
                   aria-label="Contact"
                 >
                   <svg
