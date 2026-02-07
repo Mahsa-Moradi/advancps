@@ -59,128 +59,164 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-50">
-      <main className="mx-auto flex min-h-screen max-w-6xl flex-col gap-24 px-6 pb-20 pt-10 lg:px-10">
+    <div className="min-h-screen bg-yellow-400 text-slate-950">
+      <main className="mx-auto flex min-h-screen max-w-7xl flex-col px-6 lg:px-10">
         {/* Top navigation */}
-        <header className="flex items-center justify-between gap-6">
+        <header className="flex items-center justify-between gap-6 border-b border-slate-950/10 py-6">
           <div className="flex items-center gap-3">
-            <div className="h-9 w-9 rounded-full bg-linear-to-tr from-sky-400 via-cyan-300 to-emerald-300" />
-            <div className="flex flex-col">
-              <span className="text-sm font-semibold tracking-wide text-sky-200">
+            <svg
+              className="h-8 w-8"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M12 2L2 7L12 12L22 7L12 2Z"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+              <path
+                d="M2 17L12 22L22 17"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+              <path
+                d="M2 12L12 17L22 12"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+            <span className="text-xl font-bold tracking-tight text-slate-950">
               AdvanCPS
-              </span>
-              <span className="text-xs text-slate-400">
-                Digital Transformation Consulting
-              </span>
-            </div>
+            </span>
           </div>
-          <nav className="hidden items-center gap-8 text-sm text-slate-300 md:flex">
-            <a href="#services" className="hover:text-white">
-              Services
+          <nav className="hidden items-center gap-8 text-sm font-medium text-slate-950 md:flex">
+            <a href="#home" className="transition hover:opacity-70">
+              Home
             </a>
-            <a href="#process" className="hover:text-white">
-              How we work
+            <a href="#services" className="transition hover:opacity-70">
+              Our Expertise
             </a>
-            <a href="#cases" className="hover:text-white">
-              Cases
+            <a href="#process" className="transition hover:opacity-70">
+              About Us
             </a>
-            <a href="#contact" className="hover:text-white">
+            <a href="#cases" className="transition hover:opacity-70">
+              Careers
+            </a>
+            <a href="#contact" className="transition hover:opacity-70">
               Contact
             </a>
           </nav>
-          <a
-            href="#contact"
-            className="rounded-full bg-sky-400 px-4 py-2 text-xs font-semibold uppercase tracking-wide text-slate-950 shadow-lg shadow-sky-500/40 hover:bg-sky-300"
-          >
-            Book a call
-          </a>
+          <div className="flex items-center gap-4">
+            <button
+              type="button"
+              className="p-2 text-slate-950 transition hover:opacity-70"
+              aria-label="Menu"
+            >
+              <svg
+                className="h-6 w-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
+              </svg>
+            </button>
+            <button
+              type="button"
+              className="p-2 text-slate-950 transition hover:opacity-70"
+              aria-label="Toggle theme"
+            >
+              <svg
+                className="h-6 w-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"
+                />
+              </svg>
+            </button>
+          </div>
         </header>
 
         {/* Hero section */}
-        <section className="grid gap-12 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)] lg:items-center">
-          <div className="space-y-8">
-            <p className="text-xs font-semibold uppercase tracking-[0.25em] text-sky-300">
-              Digital manufacturing excellence
-            </p>
-            <h1 className="text-balance text-3xl font-semibold leading-tight tracking-tight text-slate-50 sm:text-4xl lg:text-5xl">
-              Together we make your engineering process
-              <span className="block text-sky-300">
-                more efficient, sustainable and future‑proof.
-              </span>
+        <section
+          id="home"
+          className="relative flex min-h-[calc(100vh-120px)] flex-col items-center justify-center network-pattern py-20"
+        >
+          <div className="relative z-10 mx-auto max-w-4xl text-center">
+            <h1 className="mb-6 text-5xl font-bold leading-tight tracking-tight text-slate-950 sm:text-6xl lg:text-7xl">
+              Cutting-Edge to Real-World Impact
             </h1>
-            <p className="max-w-xl text-sm leading-relaxed text-slate-300 sm:text-base">
-              We help industrial companies design, validate and optimize complex
-              systems using model‑based systems engineering, digital twins and
-              advanced simulation.
+            <p className="mx-auto max-w-2xl text-lg leading-relaxed text-slate-800 sm:text-xl">
+              Realizing the potential of AI and novel technologies with expertise,
+              innovation, and integrity.
             </p>
-            <div className="flex flex-wrap items-center gap-4">
+            <div className="mt-10">
               <a
                 href="#contact"
-                className="rounded-full bg-sky-400 px-6 py-2.5 text-sm font-semibold text-slate-950 shadow-lg shadow-sky-500/40 hover:bg-sky-300"
+                className="inline-block rounded-full bg-slate-950 px-8 py-4 text-base font-semibold text-yellow-400 transition hover:bg-slate-900 sm:text-lg"
               >
                 Request an introduction call
               </a>
-              <span className="text-xs text-slate-400">
-                No obligation · 30 minutes · Online or on‑site
-              </span>
-            </div>
-            <div className="grid gap-4 text-xs text-slate-300 sm:grid-cols-3">
-              <div>
-                <p className="font-semibold text-slate-50">High expertise</p>
-                <p>20+ years in systems engineering and simulation.</p>
-              </div>
-              <div>
-                <p className="font-semibold text-slate-50">Faster delivery</p>
-                <p>Reduce development time and risks early in the process.</p>
-              </div>
-              <div>
-                <p className="font-semibold text-slate-50">Cost savings</p>
-                <p>Identify issues before they hit your production line.</p>
-              </div>
             </div>
           </div>
-
-          <div className="relative">
-            <div className="h-64 rounded-3xl bg-linear-to-br from-sky-500 via-cyan-400 to-emerald-400 p-px shadow-2xl shadow-sky-900/50 sm:h-72 lg:h-80">
-              <div className="flex h-full flex-col justify-between rounded-3xl bg-slate-950/90 p-6">
-                <div>
-                  <p className="text-xs font-semibold uppercase tracking-[0.25em] text-sky-300">
-                    Quick introduction
-                  </p>
-                  <p className="mt-2 text-lg font-semibold text-slate-50">
-                    Explore how DT Valley can support your engineering teams.
-                  </p>
-                  <p className="mt-2 text-xs text-slate-300">
-                    Share a few details and directly pick a suitable slot in our
-                    Calendly calendar.
-                  </p>
-                </div>
-                <ul className="mt-4 space-y-1 text-xs text-slate-300">
-                  <li>• 30‑minute online call</li>
-                  <li>• Focused on your current challenges</li>
-                  <li>• No sales pressure, just clarity</li>
-                </ul>
-              </div>
-            </div>
+          {/* Scroll indicator */}
+          <div className="absolute bottom-8 left-1/2 -translate-x-1/2">
+            <a
+              href="#services"
+              className="flex h-12 w-12 items-center justify-center rounded-full bg-slate-950 text-yellow-400 transition hover:bg-slate-900"
+              aria-label="Scroll down"
+            >
+              <svg
+                className="h-6 w-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M19 9l-7 7-7-7"
+                />
+              </svg>
+            </a>
           </div>
         </section>
 
         {/* Simple sections for structure */}
         <section
           id="services"
-          className="grid gap-8 rounded-3xl border border-slate-800 bg-slate-900/40 p-8 md:grid-cols-3"
+          className="grid gap-8 bg-white p-12 py-20 md:grid-cols-3"
         >
           <div>
-            <h2 className="text-sm font-semibold tracking-wide text-slate-50">
+            <h2 className="text-lg font-semibold tracking-wide text-slate-950">
               Services
             </h2>
-            <p className="mt-2 text-xs text-slate-300">
+            <p className="mt-2 text-sm text-slate-700">
               From early‑stage exploration to full deployment of digital twins
               and system models.
             </p>
           </div>
-          <div className="space-y-2 text-xs text-slate-300">
-            <p className="font-semibold text-slate-50">
+          <div className="space-y-2 text-sm text-slate-700">
+            <p className="font-semibold text-slate-950">
               Model‑based systems engineering
             </p>
             <p>
@@ -188,8 +224,8 @@ export default function Home() {
               traceability of requirements.
             </p>
           </div>
-          <div className="space-y-2 text-xs text-slate-300">
-            <p className="font-semibold text-slate-50">
+          <div className="space-y-2 text-sm text-slate-700">
+            <p className="font-semibold text-slate-950">
               Simulation & digital twins
             </p>
             <p>
@@ -202,15 +238,15 @@ export default function Home() {
         {/* Process overview */}
         <section
           id="process"
-          className="rounded-3xl border border-slate-800 bg-slate-900/40 p-8"
+          className="bg-slate-50 p-12 py-20"
         >
-          <h2 className="text-sm font-semibold tracking-wide text-slate-50">
+          <h2 className="text-lg font-semibold tracking-wide text-slate-950">
             How we operate
           </h2>
-          <div className="mt-6 grid gap-6 md:grid-cols-3">
-            <div className="space-y-1 text-xs text-slate-300">
-              <p className="text-sky-300">01 · Exploration</p>
-              <p className="font-semibold text-slate-50">
+          <div className="mt-6 grid gap-8 md:grid-cols-3">
+            <div className="space-y-2 text-sm text-slate-700">
+              <p className="text-yellow-500 font-semibold">01 · Exploration</p>
+              <p className="font-semibold text-slate-950">
                 Understand your challenges
               </p>
               <p>
@@ -218,9 +254,9 @@ export default function Home() {
                 stakeholders and time‑line.
               </p>
             </div>
-            <div className="space-y-1 text-xs text-slate-300">
-              <p className="text-sky-300">02 · Proposal</p>
-              <p className="font-semibold text-slate-50">
+            <div className="space-y-2 text-sm text-slate-700">
+              <p className="text-yellow-500 font-semibold">02 · Proposal</p>
+              <p className="font-semibold text-slate-950">
                 Concrete, transparent plan
               </p>
               <p>
@@ -228,9 +264,9 @@ export default function Home() {
                 your organisation.
               </p>
             </div>
-            <div className="space-y-1 text-xs text-slate-300">
-              <p className="text-sky-300">03 · Execution</p>
-              <p className="font-semibold text-slate-50">
+            <div className="space-y-2 text-sm text-slate-700">
+              <p className="text-yellow-500 font-semibold">03 · Execution</p>
+              <p className="font-semibold text-slate-950">
                 Co‑creation with your team
               </p>
               <p>
@@ -244,19 +280,19 @@ export default function Home() {
         {/* Contact & booking section with Calendly embed */}
         <section
           id="contact"
-          className="grid gap-10 rounded-3xl border border-slate-800 bg-slate-900/60 p-8 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1.3fr)]"
+          className="grid gap-10 bg-white p-12 py-20 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1.3fr)]"
         >
           <div className="space-y-5">
-            <h2 className="text-lg font-semibold text-slate-50">
+            <h2 className="text-lg font-semibold text-slate-950">
               Interested in a first conversation?
             </h2>
-            <p className="text-sm text-slate-300">
+            <p className="text-sm text-slate-700">
               Share a few details about yourself and your organisation. After
               submitting the form, you can immediately select a time slot via
               Calendly. Your name and email will be pre‑filled for a smooth
               experience.
             </p>
-            <div className="space-y-1 text-xs text-slate-400">
+            <div className="space-y-1 text-xs text-slate-600">
               <p>• Typical response within 1 business day</p>
               <p>• Online video call via Microsoft Teams or Zoom</p>
             </div>
@@ -266,13 +302,13 @@ export default function Home() {
             {step === "form" && (
               <form
                 onSubmit={handleSubmit}
-                className="space-y-4 rounded-2xl bg-slate-950/60 p-6 shadow-lg shadow-black/40"
+                className="space-y-4 rounded-2xl bg-slate-50 border border-slate-200 p-6 shadow-lg"
               >
                 <div className="grid gap-4 md:grid-cols-2">
                   <div className="space-y-1">
                     <label
                       htmlFor="firstName"
-                      className="text-xs font-medium text-slate-200"
+                      className="text-xs font-medium text-slate-700"
                     >
                       First name
                     </label>
@@ -280,7 +316,7 @@ export default function Home() {
                       id="firstName"
                       type="text"
                       autoComplete="given-name"
-                      className="w-full rounded-lg border border-slate-700 bg-slate-900 px-3 py-2 text-sm text-slate-50 outline-none ring-sky-400/60 placeholder:text-slate-500 focus:border-sky-400 focus:ring-2"
+                      className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-950 outline-none ring-yellow-400/60 placeholder:text-slate-400 focus:border-yellow-400 focus:ring-2"
                       placeholder="John"
                       value={firstName}
                       onChange={(e) => setFirstName(e.target.value)}
@@ -289,7 +325,7 @@ export default function Home() {
                   <div className="space-y-1">
                     <label
                       htmlFor="lastName"
-                      className="text-xs font-medium text-slate-200"
+                      className="text-xs font-medium text-slate-700"
                     >
                       Last name
                     </label>
@@ -297,7 +333,7 @@ export default function Home() {
                       id="lastName"
                       type="text"
                       autoComplete="family-name"
-                      className="w-full rounded-lg border border-slate-700 bg-slate-900 px-3 py-2 text-sm text-slate-50 outline-none ring-sky-400/60 placeholder:text-slate-500 focus:border-sky-400 focus:ring-2"
+                      className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-950 outline-none ring-yellow-400/60 placeholder:text-slate-400 focus:border-yellow-400 focus:ring-2"
                       placeholder="Doe"
                       value={lastName}
                       onChange={(e) => setLastName(e.target.value)}
@@ -308,7 +344,7 @@ export default function Home() {
                 <div className="space-y-1">
                   <label
                     htmlFor="email"
-                    className="text-xs font-medium text-slate-200"
+                    className="text-xs font-medium text-slate-700"
                   >
                     Work email
                   </label>
@@ -316,7 +352,7 @@ export default function Home() {
                     id="email"
                     type="email"
                     autoComplete="email"
-                    className="w-full rounded-lg border border-slate-700 bg-slate-900 px-3 py-2 text-sm text-slate-50 outline-none ring-sky-400/60 placeholder:text-slate-500 focus:border-sky-400 focus:ring-2"
+                    className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-950 outline-none ring-yellow-400/60 placeholder:text-slate-400 focus:border-yellow-400 focus:ring-2"
                     placeholder="you@company.com"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
@@ -326,7 +362,7 @@ export default function Home() {
                 <div className="space-y-1">
                   <label
                     htmlFor="phone"
-                    className="text-xs font-medium text-slate-200"
+                    className="text-xs font-medium text-slate-700"
                   >
                     Phone number
                   </label>
@@ -334,7 +370,7 @@ export default function Home() {
                     id="phone"
                     type="tel"
                     autoComplete="tel"
-                    className="w-full rounded-lg border border-slate-700 bg-slate-900 px-3 py-2 text-sm text-slate-50 outline-none ring-sky-400/60 placeholder:text-slate-500 focus:border-sky-400 focus:ring-2"
+                    className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-950 outline-none ring-yellow-400/60 placeholder:text-slate-400 focus:border-yellow-400 focus:ring-2"
                     placeholder="+1 555 000 1234"
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
@@ -342,7 +378,7 @@ export default function Home() {
                 </div>
 
                 {error && (
-                  <p className="text-xs text-rose-300" role="alert">
+                  <p className="text-xs text-rose-600" role="alert">
                     {error}
                   </p>
                 )}
@@ -350,7 +386,7 @@ export default function Home() {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="inline-flex w-full items-center justify-center rounded-full bg-sky-400 px-5 py-2.5 text-sm font-semibold text-slate-950 shadow-lg shadow-sky-500/40 transition hover:bg-sky-300 disabled:cursor-not-allowed disabled:opacity-70"
+                  className="inline-flex w-full items-center justify-center rounded-full bg-slate-950 px-5 py-2.5 text-sm font-semibold text-yellow-400 transition hover:bg-slate-900 disabled:cursor-not-allowed disabled:opacity-70"
                 >
                   {isSubmitting ? "Preparing Calendly..." : "Continue to calendar"}
                 </button>
@@ -366,22 +402,22 @@ export default function Home() {
             {step === "calendly" && (
               <div className="space-y-4">
                 <div className="flex items-center justify-between gap-3">
-                  <p className="text-sm font-semibold text-slate-50">
+                  <p className="text-sm font-semibold text-slate-950">
                     Pick a date & time
                   </p>
                   <button
                     type="button"
                     onClick={() => setStep("form")}
-                    className="text-xs text-sky-300 hover:text-sky-200"
+                    className="text-xs text-yellow-600 hover:text-yellow-700"
                   >
                     Edit contact details
                   </button>
                 </div>
-                <p className="text-xs text-slate-300">
+                <p className="text-xs text-slate-700">
                   The Calendly widget below is pre‑filled with your name and
                   email. Select the slot that works best for you.
                 </p>
-                <div className="h-[640px] overflow-hidden rounded-2xl border border-slate-800 bg-slate-950">
+                <div className="h-[640px] overflow-hidden rounded-2xl border border-slate-200 bg-white">
                   <InlineWidget
                     url={CALENDLY_EVENT_URL}
                     prefill={calendlyPrefill}
