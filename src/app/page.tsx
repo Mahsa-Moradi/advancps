@@ -60,7 +60,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-yellow-400 text-slate-950">
-      <main className="mx-auto flex min-h-screen max-w-7xl flex-col px-6 lg:px-10">
+      <main className="flex mx-auto min-h-screen w-full flex-col">
         {/* Top navigation */}
         <header className="flex items-center justify-between gap-6 border-b border-slate-950/10 py-6">
           <div className="flex items-center gap-3">
@@ -96,7 +96,7 @@ export default function Home() {
               AdvanCPS
             </span>
           </div>
-          <nav className="hidden items-center gap-8 text-sm font-medium text-slate-950 md:flex">
+          <nav className="hidden p-5 md:px-15 items-center gap-8 text-sm font-medium text-slate-950 md:flex">
             <a href="#home" className="transition hover:opacity-70">
               Home
             </a>
@@ -149,7 +149,7 @@ export default function Home() {
                   strokeLinejoin="round"
                   strokeWidth={2}
                   d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"
-                />
+        />
               </svg>
             </button>
           </div>
@@ -163,7 +163,7 @@ export default function Home() {
           <div className="relative z-10 mx-auto max-w-4xl text-center">
             <h1 className="mb-6 text-5xl font-bold leading-tight tracking-tight text-slate-950 sm:text-6xl lg:text-7xl">
               Cutting-Edge to Real-World Impact
-            </h1>
+          </h1>
             <p className="mx-auto max-w-2xl text-lg leading-relaxed text-slate-800 sm:text-xl">
               Realizing the potential of AI and novel technologies with expertise,
               innovation, and integrity.
@@ -232,7 +232,7 @@ export default function Home() {
 
             {/* Call-to-Action Buttons */}
             <div className="flex flex-wrap items-center justify-center gap-4">
-              <a
+          <a
                 href="#process"
                 className="flex items-center gap-2 rounded-lg border-2 border-yellow-400 bg-transparent px-6 py-3 text-base font-medium text-slate-950 transition hover:bg-yellow-400/10"
               >
@@ -241,7 +241,7 @@ export default function Home() {
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
-                >
+          >
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -680,7 +680,7 @@ export default function Home() {
               <a
                 href="#contact"
                 className="flex items-center gap-2 rounded-lg border-2 border-yellow-400 bg-white px-6 py-3 text-base font-medium text-slate-950 transition hover:bg-yellow-400/10"
-              >
+          >
                 <svg
                   className="h-5 w-5"
                   fill="none"
