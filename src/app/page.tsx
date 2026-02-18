@@ -86,7 +86,7 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-[#FFB703] text-slate-950">
+    <div className="min-h-screen bg-[#023047] text-slate-50">
       <main className="flex mx-auto min-h-screen w-full flex-col">
         {/* Top navigation */}
         <header className="flex items-center justify-between gap-6 border-b border-slate-950/10 py-6">
