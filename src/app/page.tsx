@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useMemo, useState } from "react";
+import { FormEvent, useMemo, useState, useEffect } from "react";
 import dynamic from "next/dynamic";
 
 const InlineWidget = dynamic(
@@ -28,6 +28,33 @@ export default function Home() {
   const [phone, setPhone] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [showCookieBanner, setShowCookieBanner] = useState(false);
+
+  useEffect(() => {
+    // Check if user has already accepted/rejected cookies
+    const cookieConsent = localStorage.getItem("cookieConsent");
+    if (!cookieConsent) {
+      // Show banner after a short delay for better UX
+      setTimeout(() => {
+        setShowCookieBanner(true);
+      }, 500);
+    }
+  }, []);
+
+  const handleAcceptCookies = () => {
+    localStorage.setItem("cookieConsent", "accepted");
+    setShowCookieBanner(false);
+  };
+
+  const handleRejectCookies = () => {
+    localStorage.setItem("cookieConsent", "rejected");
+    setShowCookieBanner(false);
+  };
+
+  const handleCloseBanner = () => {
+    localStorage.setItem("cookieConsent", "dismissed");
+    setShowCookieBanner(false);
+  };
 
   const fullName = useMemo(
     () => [firstName.trim(), lastName.trim()].filter(Boolean).join(" "),
@@ -59,7 +86,7 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-yellow-400 text-slate-950">
+    <div className="min-h-screen bg-[#FFB703] text-slate-950">
       <main className="flex mx-auto min-h-screen w-full flex-col">
         {/* Top navigation */}
         <header className="flex items-center justify-between gap-6 border-b border-slate-950/10 py-6">
@@ -171,7 +198,7 @@ export default function Home() {
             <div className="mt-10">
               <a
                 href="#contact"
-                className="inline-block rounded-full bg-slate-950 px-8 py-4 text-base font-semibold text-yellow-400 transition hover:bg-slate-900 sm:text-lg"
+                className="inline-block rounded-full bg-slate-950 px-8 py-4 text-base font-semibold text-[#FFB703] transition hover:bg-slate-900 sm:text-lg"
               >
                 Request an introduction call
               </a>
@@ -181,7 +208,7 @@ export default function Home() {
           <div className="absolute bottom-8 left-1/2 -translate-x-1/2">
             <a
               href="#services"
-              className="flex h-12 w-12 items-center justify-center rounded-full bg-slate-950 text-yellow-400 transition hover:bg-slate-900"
+              className="flex h-12 w-12 items-center justify-center rounded-full bg-slate-950 text-[#FFB703] transition hover:bg-slate-900"
               aria-label="Scroll down"
             >
               <svg
@@ -234,7 +261,7 @@ export default function Home() {
             <div className="flex flex-wrap items-center justify-center gap-4">
           <a
                 href="#process"
-                className="flex items-center gap-2 rounded-lg border-2 border-yellow-400 bg-transparent px-6 py-3 text-base font-medium text-slate-950 transition hover:bg-yellow-400/10"
+                className="flex items-center gap-2 rounded-lg border-2 border-[#FB8500] bg-transparent px-6 py-3 text-base font-medium text-slate-950 transition hover:bg-[#FFB703]/10"
               >
                 <svg
                   className="h-5 w-5"
@@ -253,7 +280,7 @@ export default function Home() {
           </a>
           <a
                 href="#about"
-                className="flex items-center gap-2 rounded-lg border-2 border-yellow-400 bg-transparent px-6 py-3 text-base font-medium text-slate-950 transition hover:bg-yellow-400/10"
+                className="flex items-center gap-2 rounded-lg border-2 border-[#FB8500] bg-transparent px-6 py-3 text-base font-medium text-slate-950 transition hover:bg-[#FFB703]/10"
               >
                 <svg
                   className="h-5 w-5"
@@ -299,7 +326,7 @@ export default function Home() {
             <div className="mb-12 flex flex-wrap items-center justify-center gap-4 lg:gap-6">
               {/* Step 1: Discover */}
               <div className="relative flex flex-col items-center">
-                <div className="relative flex h-32 w-32 flex-col items-center justify-center rounded-2xl bg-teal-700 sm:h-40 sm:w-40">
+                <div className="relative flex h-32 w-32 flex-col items-center justify-center rounded-2xl bg-[#023047] sm:h-40 sm:w-40">
                   <span className="absolute right-2 top-2 text-2xl font-bold text-white/20 sm:text-3xl">
                     01
                   </span>
@@ -341,7 +368,7 @@ export default function Home() {
 
               {/* Step 2: Design */}
               <div className="relative flex flex-col items-center">
-                <div className="relative flex h-32 w-32 flex-col items-center justify-center rounded-2xl bg-teal-700 sm:h-40 sm:w-40">
+                <div className="relative flex h-32 w-32 flex-col items-center justify-center rounded-2xl bg-[#023047] sm:h-40 sm:w-40">
                   <span className="absolute right-2 top-2 text-2xl font-bold text-white/20 sm:text-3xl">
                     02
                   </span>
@@ -383,7 +410,7 @@ export default function Home() {
 
               {/* Step 3: Build */}
               <div className="relative flex flex-col items-center">
-                <div className="relative flex h-32 w-32 flex-col items-center justify-center rounded-2xl bg-teal-700 sm:h-40 sm:w-40">
+                <div className="relative flex h-32 w-32 flex-col items-center justify-center rounded-2xl bg-[#023047] sm:h-40 sm:w-40">
                   <span className="absolute right-2 top-2 text-2xl font-bold text-white/20 sm:text-3xl">
                     03
                   </span>
@@ -425,7 +452,7 @@ export default function Home() {
 
               {/* Step 4: Deploy */}
               <div className="relative flex flex-col items-center">
-                <div className="relative flex h-32 w-32 flex-col items-center justify-center rounded-2xl bg-teal-700 sm:h-40 sm:w-40">
+                <div className="relative flex h-32 w-32 flex-col items-center justify-center rounded-2xl bg-[#023047] sm:h-40 sm:w-40">
                   <span className="absolute right-2 top-2 text-2xl font-bold text-white/20 sm:text-3xl">
                     04
                   </span>
@@ -467,7 +494,7 @@ export default function Home() {
 
               {/* Step 5: Evolve */}
               <div className="relative flex flex-col items-center">
-                <div className="relative flex h-32 w-32 flex-col items-center justify-center rounded-2xl bg-teal-700 sm:h-40 sm:w-40">
+                <div className="relative flex h-32 w-32 flex-col items-center justify-center rounded-2xl bg-[#023047] sm:h-40 sm:w-40">
                   <span className="absolute right-2 top-2 text-2xl font-bold text-white/20 sm:text-3xl">
                     05
                   </span>
@@ -519,7 +546,7 @@ export default function Home() {
             {/* Service Cards Grid */}
             <div className="mb-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {/* Card 1: Strategy & Roadmapping */}
-              <div className="relative rounded-2xl bg-teal-700 p-6">
+              <div className="relative rounded-2xl bg-[#023047] p-6">
                 <div className="mb-4">
                   <svg
                     className="mb-4 h-10 w-10 text-yellow-400"
@@ -544,7 +571,7 @@ export default function Home() {
               </div>
 
               {/* Card 2: Model Design & Development */}
-              <div className="relative rounded-2xl bg-teal-700 p-6">
+              <div className="relative rounded-2xl bg-[#023047] p-6">
                 <div className="mb-4">
                   <svg
                     className="mb-4 h-10 w-10 text-yellow-400"
@@ -575,7 +602,7 @@ export default function Home() {
               </div>
 
               {/* Card 3: Deployment & MLOps */}
-              <div className="relative rounded-2xl bg-teal-700 p-6">
+              <div className="relative rounded-2xl bg-[#023047] p-6">
                 <div className="mb-4">
                   <svg
                     className="mb-4 h-10 w-10 text-yellow-400"
@@ -600,7 +627,7 @@ export default function Home() {
               </div>
 
               {/* Card 4: Feasibility Audits & Advisory */}
-              <div className="relative rounded-2xl bg-teal-700 p-6">
+              <div className="relative rounded-2xl bg-[#023047] p-6">
                 <div className="mb-4">
                   <svg
                     className="mb-4 h-10 w-10 text-yellow-400"
@@ -625,7 +652,7 @@ export default function Home() {
               </div>
 
               {/* Card 5: Workshops & Training */}
-              <div className="relative rounded-2xl bg-teal-700 p-6">
+              <div className="relative rounded-2xl bg-[#023047] p-6">
                 <div className="mb-4">
                   <svg
                     className="mb-4 h-10 w-10 text-yellow-400"
@@ -650,7 +677,7 @@ export default function Home() {
               </div>
 
               {/* Card 6: Responsible AI & Governance */}
-              <div className="relative rounded-2xl bg-teal-700 p-6">
+              <div className="relative rounded-2xl bg-[#023047] p-6">
                 <div className="mb-4">
                   <svg
                     className="mb-4 h-10 w-10 text-yellow-400"
@@ -703,25 +730,15 @@ export default function Home() {
         {/* CTA Banner Section */}
         <section className="bg-white py-12">
           <div className="mx-auto max-w-6xl px-6 lg:px-10">
-            <div className="flex flex-col items-center gap-6 rounded-2xl bg-teal-700 p-8 sm:flex-row sm:gap-8">
+            <div className="flex flex-col items-center gap-6 rounded-2xl bg-[#023047] p-8 sm:flex-row sm:gap-8">
               {/* Profile Picture */}
               <div className="shrink-0">
                 <div className="h-24 w-24 overflow-hidden rounded-full border-4 border-white/20 sm:h-28 sm:w-28">
-                  <div className="flex h-full w-full items-center justify-center bg-slate-300">
-                    <svg
-                      className="h-12 w-12 text-slate-500"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                      />
-                    </svg>
-                  </div>
+                  <img
+                    src="/photo_2026-02-18_13-30-32.jpg"
+                    alt="Mehrdad Moradi"
+                    className="h-full w-full object-cover"
+                  />
                 </div>
               </div>
 
@@ -742,7 +759,7 @@ export default function Home() {
               <div className="shrink-0">
                 <a
                   href="#contact"
-                  className="flex items-center gap-2 rounded-full border-2 border-yellow-400 bg-teal-700 px-6 py-3 text-base font-medium text-white transition hover:bg-teal-600"
+                  className="flex items-center gap-2 rounded-full border-2 border-[#FB8500] bg-[#023047] px-6 py-3 text-base font-medium text-white transition hover:bg-[#219EBC]"
                 >
                   <svg
                     className="h-5 w-5"
@@ -774,7 +791,7 @@ export default function Home() {
           </h2>
           <div className="mt-6 grid gap-8 md:grid-cols-3">
             <div className="space-y-2 text-sm text-slate-700">
-              <p className="text-yellow-500 font-semibold">01 · Exploration</p>
+              <p className="text-[#FB8500] font-semibold">01 · Exploration</p>
               <p className="font-semibold text-slate-950">
                 Understand your challenges
               </p>
@@ -784,7 +801,7 @@ export default function Home() {
               </p>
             </div>
             <div className="space-y-2 text-sm text-slate-700">
-              <p className="text-yellow-500 font-semibold">02 · Proposal</p>
+              <p className="text-[#FB8500] font-semibold">02 · Proposal</p>
               <p className="font-semibold text-slate-950">
                 Concrete, transparent plan
               </p>
@@ -794,7 +811,7 @@ export default function Home() {
               </p>
             </div>
             <div className="space-y-2 text-sm text-slate-700">
-              <p className="text-yellow-500 font-semibold">03 · Execution</p>
+              <p className="text-[#FB8500] font-semibold">03 · Execution</p>
               <p className="font-semibold text-slate-950">
                 Co‑creation with your team
               </p>
@@ -811,19 +828,94 @@ export default function Home() {
           id="contact"
           className="grid gap-10 bg-white p-12 py-20 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1.3fr)]"
         >
-          <div className="space-y-5">
-            <h2 className="text-lg font-semibold text-slate-950">
-              Interested in a first conversation?
-            </h2>
-            <p className="text-sm text-slate-700">
-              Share a few details about yourself and your organisation. After
-              submitting the form, you can immediately select a time slot via
-              Calendly. Your name and email will be pre‑filled for a smooth
-              experience.
-            </p>
-            <div className="space-y-1 text-xs text-slate-600">
-              <p>• Typical response within 1 business day</p>
-              <p>• Online video call via Microsoft Teams or Zoom</p>
+          <div className="space-y-8">
+            {/* Heading + intro text */}
+            <div>
+              <h2 className="text-3xl font-semibold tracking-tight text-slate-950 sm:text-4xl">
+                Let&apos;s talk
+              </h2>
+              <p className="mt-3 text-sm leading-relaxed text-slate-700 sm:text-base">
+                Schedule a call with our team to discuss how AI and digital
+                solutions can transform your business.
+              </p>
+            </div>
+
+            {/* Avatar + short bio */}
+            <div className="flex items-center gap-4">
+              <div className="h-20 w-20 overflow-hidden rounded-full bg-slate-200 sm:h-24 sm:w-24">
+                <img
+                  src="/photo_2026-02-18_13-30-32.jpg"
+                  alt="Mehrdad Moradi"
+                  className="h-full w-full object-cover"
+                />
+              </div>
+              <div className="space-y-1">
+                <p className="text-sm font-semibold text-slate-950">
+                  Mehrdad Moradi
+                </p>
+                <p className="text-xs text-slate-600">
+                  Founder &amp; AI Consultant at AdvanCPS
+                </p>
+              </div>
+            </div>
+
+            {/* Contact options */}
+            <div className="space-y-4 text-sm text-slate-700">
+              {/* Email row */}
+              <div className="flex items-center gap-3">
+                <span className="flex h-9 w-9 items-center justify-center rounded-lg border border-slate-300 text-slate-950">
+                  <svg
+                    className="h-4 w-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                    />
+                  </svg>
+                </span>
+                <div>
+                  <p className="text-sm font-semibold text-slate-950">Email</p>
+                  <a
+                    href="mailto:M.moradi.1367@gmail.com"
+                    className="text-sm text-slate-700 underline decoration-slate-400 underline-offset-2 hover:text-slate-900"
+                  >
+                    M.moradi.1367@gmail.com
+                  </a>
+                </div>
+              </div>
+
+              {/* Quick meeting row */}
+              <div className="flex items-start gap-3">
+                <span className="flex h-9 w-9 items-center justify-center rounded-lg border border-slate-300 text-slate-950">
+                  <svg
+                    className="h-4 w-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M8 7V3m8 4V3M5 11h14M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                    />
+                  </svg>
+                </span>
+                <div>
+                  <p className="text-sm font-semibold text-slate-950">
+                    Quick meeting
+                  </p>
+                  <p className="text-xs leading-relaxed text-slate-600">
+                    Fill out the form and we&apos;ll get back to you within 24
+                    hours to schedule a short call that fits your agenda.
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -845,7 +937,7 @@ export default function Home() {
                       id="firstName"
                       type="text"
                       autoComplete="given-name"
-                      className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-950 outline-none ring-yellow-400/60 placeholder:text-slate-400 focus:border-yellow-400 focus:ring-2"
+                      className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-950 outline-none ring-[#FFB703]/60 placeholder:text-slate-400 focus:border-[#FFB703] focus:ring-2"
                       placeholder="John"
                       value={firstName}
                       onChange={(e) => setFirstName(e.target.value)}
@@ -862,7 +954,7 @@ export default function Home() {
                       id="lastName"
                       type="text"
                       autoComplete="family-name"
-                      className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-950 outline-none ring-yellow-400/60 placeholder:text-slate-400 focus:border-yellow-400 focus:ring-2"
+                      className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-950 outline-none ring-[#FFB703]/60 placeholder:text-slate-400 focus:border-[#FFB703] focus:ring-2"
                       placeholder="Doe"
                       value={lastName}
                       onChange={(e) => setLastName(e.target.value)}
@@ -881,7 +973,7 @@ export default function Home() {
                     id="email"
                     type="email"
                     autoComplete="email"
-                    className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-950 outline-none ring-yellow-400/60 placeholder:text-slate-400 focus:border-yellow-400 focus:ring-2"
+                    className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-950 outline-none ring-[#FFB703]/60 placeholder:text-slate-400 focus:border-[#FFB703] focus:ring-2"
                     placeholder="you@company.com"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
@@ -899,7 +991,7 @@ export default function Home() {
                     id="phone"
                     type="tel"
                     autoComplete="tel"
-                    className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-950 outline-none ring-yellow-400/60 placeholder:text-slate-400 focus:border-yellow-400 focus:ring-2"
+                    className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-950 outline-none ring-[#FFB703]/60 placeholder:text-slate-400 focus:border-[#FFB703] focus:ring-2"
                     placeholder="+1 555 000 1234"
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
@@ -915,7 +1007,7 @@ export default function Home() {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="inline-flex w-full items-center justify-center rounded-full bg-slate-950 px-5 py-2.5 text-sm font-semibold text-yellow-400 transition hover:bg-slate-900 disabled:cursor-not-allowed disabled:opacity-70"
+                  className="inline-flex w-full items-center justify-center rounded-full bg-slate-950 px-5 py-2.5 text-sm font-semibold text-[#FFB703] transition hover:bg-slate-900 disabled:cursor-not-allowed disabled:opacity-70"
                 >
                   {isSubmitting ? "Preparing Calendly..." : "Continue to calendar"}
                 </button>
@@ -937,7 +1029,7 @@ export default function Home() {
                   <button
                     type="button"
                     onClick={() => setStep("form")}
-                    className="text-xs text-yellow-600 hover:text-yellow-700"
+                  className="text-xs text-[#FB8500] hover:text-[#FFB703]"
                   >
                     Edit contact details
                   </button>
@@ -970,7 +1062,7 @@ export default function Home() {
       </main>
 
       {/* Footer */}
-      <footer className="bg-yellow-400 py-12">
+      <footer className="bg-[#FB8500] py-12">
         <div className="mx-auto max-w-6xl px-6 lg:px-10">
           {/* Logo */}
           <div className="mb-8 flex justify-center">
@@ -1080,15 +1172,15 @@ export default function Home() {
                   />
                 </svg>
                 <a
-                  href="mailto:info@advancps.com"
+                  href="mailto:M.moradi.1367@gmail.com"
                   className="text-sm text-slate-950 transition hover:opacity-70"
                 >
-                  info@advancps.com
+                  M.moradi.1367@gmail.com
                 </a>
               </div>
               <div className="flex items-center gap-4">
                 <a
-                  href="https://linkedin.com"
+                  href="https://be.linkedin.com"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex h-10 w-10 items-center justify-center rounded-full border-2 border-slate-950 text-slate-950 transition hover:bg-slate-950 hover:text-yellow-400"
@@ -1188,6 +1280,80 @@ export default function Home() {
           </div>
         </div>
       </footer>
+
+      {/* Cookie Consent Banner */}
+      {showCookieBanner && (
+        <div className="fixed bottom-0 left-0 right-0 z-50 bg-[#8ECAE6] p-6 shadow-lg">
+          <div className="mx-auto max-w-4xl">
+            <div className="relative rounded-2xl bg-white p-6 shadow-xl">
+              {/* Close Button */}
+              <button
+                onClick={handleCloseBanner}
+                className="absolute right-4 top-4 text-slate-950 transition hover:opacity-70"
+                aria-label="Close"
+              >
+                <svg
+                  className="h-5 w-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              </button>
+
+              {/* Title */}
+              <h3 className="mb-3 text-lg font-bold text-slate-950">
+                We value your privacy
+              </h3>
+
+              {/* Main Text */}
+              <p className="mb-6 text-sm leading-relaxed text-slate-700">
+                We use essential cookies to make our site work. With your
+                consent, we'll also use analytics and marketing cookies to
+                improve your experience. You can change your choices at any
+                time. See our{" "}
+                <a
+                  href="/cookies"
+                  className="underline transition hover:opacity-70"
+                >
+                  Cookie Policy
+                </a>
+                .
+              </p>
+
+              {/* Action Buttons */}
+              <div className="flex flex-wrap items-center justify-between gap-4">
+                <a
+                  href="/cookies"
+                  className="text-sm font-medium text-slate-950 underline transition hover:opacity-70"
+                >
+                  Customize
+                </a>
+                <div className="flex items-center gap-3">
+                  <button
+                    onClick={handleRejectCookies}
+                    className="rounded-lg border-2 border-slate-300 bg-white px-5 py-2.5 text-sm font-medium text-slate-950 transition hover:bg-slate-50"
+                  >
+                    Reject non-essential
+                  </button>
+                  <button
+                    onClick={handleAcceptCookies}
+                    className="rounded-lg bg-yellow-400 px-5 py-2.5 text-sm font-semibold text-slate-950 transition hover:bg-yellow-500"
+                  >
+                    Accept all
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
