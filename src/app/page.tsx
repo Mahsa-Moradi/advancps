@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useMemo, useState, useEffect } from "react";
+import { FormEvent, useMemo, useState, useEffect, useRef } from "react";
 import dynamic from "next/dynamic";
 
 const InlineWidget = dynamic(
@@ -16,9 +16,196 @@ const InlineWidget = dynamic(
 );
 // **************************************
 const CALENDLY_EVENT_URL =
-  "https://calendly.com/mahsamoradi611-mm/30min";
+  "https://calendly.com/mehrdadmoradi/15min";
 // **************************************
 type Step = "form" | "calendly";
+
+// Neural Network Background Component
+function NeuralNetworkBackground() {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const animationFrameRef = useRef<number | null>(null);
+  const mouseRef = useRef({ y: 0 });
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    const dpr = window.devicePixelRatio || 1;
+    const nodesCount = 50;
+
+    type Node = {
+      x: number;
+      y: number;
+      baseY: number;
+      targetY: number;
+      vx: number;
+      vy: number;
+    };
+
+    const nodes: Node[] = [];
+
+    function resize() {
+      if (!canvas || !ctx) return;
+      const rect = canvas.getBoundingClientRect();
+      canvas.width = rect.width * dpr;
+      canvas.height = rect.height * dpr;
+      ctx.scale(dpr, dpr);
+      canvas.style.width = `${rect.width}px`;
+      canvas.style.height = `${rect.height}px`;
+    }
+
+    function initNodes() {
+      if (!canvas) return;
+      nodes.length = 0;
+      const rect = canvas.getBoundingClientRect();
+      for (let i = 0; i < nodesCount; i++) {
+        const baseY = Math.random() * rect.height;
+        nodes.push({
+          x: Math.random() * rect.width,
+          y: baseY,
+          baseY: baseY,
+          targetY: baseY,
+          vx: (Math.random() - 0.5) * 0.1,
+          vy: (Math.random() - 0.5) * 0.1,
+        });
+      }
+    }
+
+    const handleMouseMove = (event: MouseEvent) => {
+      mouseRef.current.y = event.clientY;
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener("resize", resize);
+
+    resize();
+    initNodes();
+
+    const maxDistance = 140;
+    const lerpFactor = 0.03; // Smooth movement factor
+    const mouseInfluenceRadius = 300;
+
+    function lerp(start: number, end: number, factor: number): number {
+      return start + (end - start) * factor;
+    }
+
+    function tick() {
+      if (!canvas || !ctx) return;
+      const rect = canvas.getBoundingClientRect();
+      // Clear using actual canvas dimensions (accounting for dpr)
+      ctx.clearRect(0, 0, canvas.width / dpr, canvas.height / dpr);
+
+      // Subtle grid pattern
+      ctx.strokeStyle = "rgba(142, 202, 230, 0.03)"; // #8ECAE6 very subtle
+      ctx.lineWidth = 0.5;
+      const gridSize = 60;
+      for (let x = 0; x < rect.width; x += gridSize) {
+        ctx.beginPath();
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, rect.height);
+        ctx.stroke();
+      }
+      for (let y = 0; y < rect.height; y += gridSize) {
+        ctx.beginPath();
+        ctx.moveTo(0, y);
+        ctx.lineTo(rect.width, y);
+        ctx.stroke();
+      }
+
+      // Update nodes based on mouse position
+      nodes.forEach((node) => {
+        const mouseY = mouseRef.current.y - rect.top;
+        const distanceFromMouse = Math.abs(node.y - mouseY);
+
+        if (distanceFromMouse < mouseInfluenceRadius) {
+          const influence = 1 - distanceFromMouse / mouseInfluenceRadius;
+          const mouseOffset = (mouseY - node.baseY) * influence * 0.4;
+          node.targetY = node.baseY + mouseOffset;
+        } else {
+          node.targetY = node.baseY;
+        }
+
+        // Smooth movement using lerp
+        node.y = lerp(node.y, node.targetY, lerpFactor);
+
+        // Gentle drift
+        node.x += node.vx;
+        if (node.x < 0) node.x = rect.width;
+        if (node.x > rect.width) node.x = 0;
+      });
+
+      // Draw connections (synapses)
+      for (let i = 0; i < nodes.length; i++) {
+        for (let j = i + 1; j < nodes.length; j++) {
+          const a = nodes[i];
+          const b = nodes[j];
+          const dx = a.x - b.x;
+          const dy = a.y - b.y;
+          const distSq = dx * dx + dy * dy;
+
+          if (distSq < maxDistance * maxDistance) {
+            const dist = Math.sqrt(distSq);
+            const alpha = 1 - dist / maxDistance;
+            ctx.strokeStyle = `rgba(33, 158, 188, ${alpha * 0.15})`; // #219EBC
+            ctx.lineWidth = 0.8;
+            ctx.beginPath();
+            ctx.moveTo(a.x, a.y);
+            ctx.lineTo(b.x, b.y);
+            ctx.stroke();
+          }
+        }
+      }
+
+      // Draw nodes (neurons)
+      nodes.forEach((node) => {
+        // Outer glow
+        const gradient = ctx.createRadialGradient(
+          node.x,
+          node.y,
+          0,
+          node.x,
+          node.y,
+          6
+        );
+        gradient.addColorStop(0, "rgba(142, 202, 230, 0.2)"); // #8ECAE6
+        gradient.addColorStop(1, "rgba(142, 202, 230, 0)");
+
+        ctx.beginPath();
+        ctx.fillStyle = gradient;
+        ctx.arc(node.x, node.y, 6, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Core (highlight)
+        ctx.beginPath();
+        ctx.fillStyle = "rgba(255, 183, 3, 0.5)"; // #FFB703
+        ctx.arc(node.x, node.y, 2, 0, Math.PI * 2);
+        ctx.fill();
+      });
+
+      animationFrameRef.current = requestAnimationFrame(tick);
+    }
+
+    tick();
+
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("resize", resize);
+      if (animationFrameRef.current !== null) {
+        cancelAnimationFrame(animationFrameRef.current);
+      }
+    };
+  }, []);
+
+  return (
+    <canvas
+      ref={canvasRef}
+      className="absolute inset-0 h-full w-full pointer-events-none"
+    />
+  );
+}
 
 export default function Home() {
   const [step, setStep] = useState<Step>("form");
@@ -185,8 +372,9 @@ export default function Home() {
         {/* Hero section */}
         <section
           id="home"
-          className="relative flex min-h-[calc(100vh-120px)] flex-col items-center justify-center network-pattern py-20"
+          className="relative flex min-h-[calc(100vh-120px)] flex-col items-center justify-center overflow-hidden py-20"
         >
+          <NeuralNetworkBackground />
           <div className="relative z-10 mx-auto max-w-4xl text-center">
             <h1 className="mb-6 text-5xl font-bold leading-tight tracking-tight text-slate-950 sm:text-6xl lg:text-7xl">
               Cutting-Edge to Real-World Impact
