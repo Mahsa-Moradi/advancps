@@ -265,7 +265,7 @@ export default function Home() {
       return;
     }
 
-    setIsSubmitting(true);
+    setIsSubmitting(true;
     setTimeout(() => {
       setIsSubmitting(false);
       setStep("calendly");
