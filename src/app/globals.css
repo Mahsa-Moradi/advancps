@@ -32,3 +32,25 @@ body {
   background-size: 100px 100px, 120px 120px, 50px 50px, 50px 50px;
   background-position: 0 0, 50px 50px, 0 0, 0 0;
 }
+
+/* Partner logos marquee (global CSS avoids styled-jsx hydration mismatches) */
+@keyframes experience-marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.experience-marquee {
+  animation: experience-marquee 28s linear infinite;
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .experience-marquee {
+    animation: none;
+    transform: none;
+  }
+}

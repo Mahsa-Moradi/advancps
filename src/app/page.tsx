@@ -20,6 +20,9 @@ const CALENDLY_EVENT_URL =
 // **************************************
 type Step = "form" | "calendly";
 
+/** Set to `true` to show every card in Professional Experience; `false` shows only IMEC (id 1). */
+const SHOW_ALL_PROFESSIONAL_EXPERIENCES = false;
+
 // Neural Network Background Component
 function NeuralNetworkBackground() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -99,7 +102,7 @@ function NeuralNetworkBackground() {
       ctx.clearRect(0, 0, canvas.width / dpr, canvas.height / dpr);
 
       // Subtle grid pattern
-      ctx.strokeStyle = "rgba(142, 202, 230, 0.03)"; // #8ECAE6 very subtle
+      ctx.strokeStyle = "rgba(142, 202, 230, 0)"; // grid hidden
       ctx.lineWidth = 0.5;
       const gridSize = 60;
       for (let x = 0; x < rect.width; x += gridSize) {
@@ -149,7 +152,7 @@ function NeuralNetworkBackground() {
           if (distSq < maxDistance * maxDistance) {
             const dist = Math.sqrt(distSq);
             const alpha = 1 - dist / maxDistance;
-            ctx.strokeStyle = `rgba(33, 158, 188, ${alpha * 0.15})`; // #219EBC
+          ctx.strokeStyle = `rgba(232, 249, 254, ${alpha * 0.18})`; // #E8F9FE
             ctx.lineWidth = 0.8;
             ctx.beginPath();
             ctx.moveTo(a.x, a.y);
@@ -170,8 +173,8 @@ function NeuralNetworkBackground() {
           node.y,
           6
         );
-        gradient.addColorStop(0, "rgba(142, 202, 230, 0.2)"); // #8ECAE6
-        gradient.addColorStop(1, "rgba(142, 202, 230, 0)");
+        gradient.addColorStop(0, "rgba(179, 214, 238, 0.25)"); // #B3D6EE
+        gradient.addColorStop(1, "rgba(179, 214, 238, 0)");
 
         ctx.beginPath();
         ctx.fillStyle = gradient;
@@ -180,7 +183,7 @@ function NeuralNetworkBackground() {
 
         // Core (highlight)
         ctx.beginPath();
-        ctx.fillStyle = "rgba(255, 183, 3, 0.5)"; // #FFB703
+        ctx.fillStyle = "rgba(255, 255, 255, 1)"; // #FFFFFF
         ctx.arc(node.x, node.y, 2, 0, Math.PI * 2);
         ctx.fill();
       });
@@ -216,6 +219,196 @@ export default function Home() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [showCookieBanner, setShowCookieBanner] = useState(false);
+  const [activeExperienceId, setActiveExperienceId] = useState<number | null>(
+    null
+  );
+  const [isExperienceModalOpen, setIsExperienceModalOpen] = useState(false);
+
+  const experiences = useMemo(
+    () => [
+      {
+        id: 1,
+        title: "Photonic Measurement & Instrument Automation",
+        role: "IMEC",
+        period: "2023 - Present",
+        summary:
+          "End-to-end automation of complex photonic measurement systems, instrument control (wafer prober setups), and high‑volume data workflows—with AI-driven anomaly detection and automated quality control to improve reliability and data integrity.",
+        details: [
+          "Built and deployed a robust Python framework to control laboratory instruments (including wafer prober systems) via GPIB and Ethernet.",
+          "Developed a modular custom instrument control library (GPIB, RS232, Ethernet) enabling plug‑and‑play integration for new instruments.",
+          "Implemented an automated photonic testing suite tailored for wafer probers, reducing manual intervention in measurements.",
+          "Designed an automated processing pipeline for high‑volume experimental data with real‑time, AI‑driven anomaly detection to flag measurement errors.",
+          "Created automated quality control and reporting/dashboard capabilities for logging and monitoring system health for 24/7 long‑running tasks.",
+          "Introduced an experiment scheduler to automate experiment scheduling and improve workflow throughput.",
+          "Maintained a version‑controlled codebase (Git) with documentation and deployment guides to support long‑term collaboration.",
+        ],
+        technologies: [
+          "Python",
+          "GPIB",
+          "Ethernet",
+          "RS232",
+          "Instrument control",
+          "Automation",
+          "Data acquisition",
+          "Anomaly detection",
+          "Quality control",
+          "Experiment scheduling",
+          "Git",
+        ],
+      },
+      {
+        id: 2,
+        title: "R&D - Modeling and Simulation",
+        role: "Movu Robotics (Belgium)",
+        period: "2023 - 2024",
+        summary:
+          "Developed CI/CD pipelines and test automation in Azure DevOps with MATLAB/Simulink and model‑based systems engineering; built reliability testbeds and performed MiL/HiL simulations for robot functionality verification.",
+        details: [
+          "Developed CI/CD pipelines in Azure DevOps for test automation based on MATLAB/Simulink and model‑based systems engineering.",
+          "Built a testbed for reliability testing of robotic systems.",
+          "Modeled robots and performed Model‑/Hardware‑in‑the‑Loop simulations to verify system functionalities.",
+        ],
+        technologies: [
+          "Azure DevOps",
+          "CI/CD",
+          "MATLAB",
+          "Simulink",
+          "Model-based systems engineering",
+          "MiL/HiL",
+          "Robotics",
+          "Test automation",
+        ],
+      },
+      {
+        id: 3,
+        title: "R&D Lead - Software and Testing",
+        role: "Classified Cycling (Belgium)",
+        period: "2024",
+        summary:
+          "Led software & testing efforts—managing projects and subcontractors, improving engineering processes with CI/CD and automated data processing, and designing automated test rigs for robustness testing.",
+        details: [
+          "Managed projects and subcontractors to deliver testing and software outcomes.",
+          "Optimized development processes using CI/CD and automated data processing workflows.",
+          "Designed and automated test rigs for robustness testing.",
+        ],
+        technologies: [
+          "CI/CD",
+          "Automated data processing",
+          "Test rigs",
+          "Robustness testing",
+          "Project leadership",
+        ],
+      },
+      {
+        id: 4,
+        title: "R&D - Simulation, ML, Testing, V&V",
+        role: "Flanders Make @ University of Antwerp (Belgium)",
+        period: "2018 - 2023",
+        summary:
+          "Applied model‑based systems engineering to test automation and improved validation & verification for ISO 26262 using reinforcement learning, GANs, and heuristic/metaheuristic approaches.",
+        details: [
+          "Used model‑based systems engineering approaches for test automation.",
+          "Optimized validation and verification for ISO 26262 using RL, GAN, heuristics, and metaheuristics.",
+          "Developed simulation‑based techniques for verification of white‑box (Simulink) and black‑box (FMI) models.",
+          "Mentored bachelor and master students and supported lab sessions/teaching activities.",
+        ],
+        technologies: [
+          "Python",
+          "MATLAB",
+          "Simulink",
+          "ISO 26262",
+          "Reinforcement learning",
+          "GAN",
+          "FMI",
+          "Model-based engineering",
+          "Test automation",
+          "V&V",
+        ],
+      },
+      {
+        id: 5,
+        title: "Embedded Systems & FPGA Engineering",
+        role: "Sharif Pishgaman Smart System & Pooya Tadbir Karamad",
+        period: "2012 - 2018",
+        summary:
+          "Designed multi‑layer hardware and developed embedded software for monitoring/control products; built FPGA-based solutions and performed reliability analyses for industrial applications.",
+        details: [
+          "Designed schematics/layouts and PCB boards (Altium) for single/multi-layer hardware.",
+          "Developed embedded C firmware across PIC/STM/AVR microcontroller platforms.",
+          "Worked with communication protocols including UART/USART, SPI, I2C, CAN, and TCP/IP.",
+          "Designed and tested FPGA-based systems and fault-tolerant controllers using VHDL.",
+          "Performed reliability analyses (FTA, FMEA, FMECA) to improve product quality.",
+        ],
+        technologies: [
+          "Embedded C",
+          "Altium Designer",
+          "AVR",
+          "STM",
+          "PIC",
+          "FPGA",
+          "VHDL",
+          "SPI",
+          "I2C",
+          "CAN",
+          "UART/USART",
+          "TCP/IP",
+          "Zigbee",
+          "FTA",
+          "FMEA",
+          "FMECA",
+        ],
+      },
+    ],
+    []
+  );
+
+  const visibleExperiences = useMemo(
+    () =>
+      SHOW_ALL_PROFESSIONAL_EXPERIENCES
+        ? experiences
+        : experiences.filter((e) => e.id === 1),
+    [experiences]
+  );
+
+  const experienceCompanies = useMemo(
+    () => [
+      {
+        name: "IMEC",
+        logoSrc: "/imec-logo.svg",
+        href: "https://www.imec-int.com/",
+      },
+      {
+        name: "FLANDERS MAKE",
+        logoSrc: "/photo_2026-05-03_16-04-58-removebg-preview.png",
+        href: "https://www.flandersmake.be/en",
+      },
+      {
+        name: "MOVU",
+        logoSrc: "/photo_2026-05-03_16-04-45-removebg-preview.png",
+        href: "https://www.movu-robotics.com/en",
+      },
+      {
+        name: "CLASSIFIED",
+        logoSrc: "/photo_2026-05-03_16-04-33-removebg-preview.png",
+        href: "https://www.classified-cycling.cc/",
+      },
+    ],
+    []
+  );
+
+  const activeExperience = useMemo(() => {
+    if (activeExperienceId == null) return null;
+    return experiences.find((e) => e.id === activeExperienceId) ?? null;
+  }, [activeExperienceId, experiences]);
+
+  const openExperienceModal = (id: number) => {
+    setActiveExperienceId(id);
+    setIsExperienceModalOpen(true);
+  };
+
+  const closeExperienceModal = () => {
+    setIsExperienceModalOpen(false);
+  };
 
   useEffect(() => {
     // Check if user has already accepted/rejected cookies
@@ -227,6 +420,24 @@ export default function Home() {
       }, 500);
     }
   }, []);
+
+  useEffect(() => {
+    if (!isExperienceModalOpen) return;
+
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") closeExperienceModal();
+    };
+
+    window.addEventListener("keydown", onKeyDown);
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      window.removeEventListener("keydown", onKeyDown);
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [isExperienceModalOpen]);
 
   const handleAcceptCookies = () => {
     localStorage.setItem("cookieConsent", "accepted");
@@ -276,46 +487,23 @@ export default function Home() {
     <div className="min-h-screen bg-[#023047] text-slate-50">
       <main className="flex mx-auto min-h-screen w-full flex-col">
         {/* Top navigation */}
-        <header className="flex items-center justify-between gap-6 border-b border-slate-950/10 py-6">
+        <header className="flex items-center justify-between gap-6 border-b border-slate-950/10 py-6 text-[#E8F9FE]">
           <div className="flex items-center gap-3">
-            <svg
-              className="h-8 w-8"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M12 2L2 7L12 12L22 7L12 2Z"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-              <path
-                d="M2 17L12 22L22 17"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-              <path
-                d="M2 12L12 17L22 12"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-            <span className="text-xl font-bold tracking-tight text-slate-950">
-              AdvanCPS
-            </span>
+            <img
+              src="/photo_2026-05-03_18-14-23.jpg"
+              alt="AdvanCPS logo"
+              className="h-10 w-auto object-contain"
+            />
           </div>
-          <nav className="hidden p-5 md:px-15 items-center gap-8 text-sm font-medium text-slate-950 md:flex">
+          <nav className="hidden p-5 md:px-15 items-center gap-8 text-sm font-medium text-[#E8F9FE] md:flex">
             <a href="#home" className="transition hover:opacity-70">
               Home
             </a>
             <a href="#services" className="transition hover:opacity-70">
               Our Expertise
+            </a>
+            <a href="#experience" className="transition hover:opacity-70">
+              Experience
             </a>
             <a href="#process" className="transition hover:opacity-70">
               About Us
@@ -330,7 +518,7 @@ export default function Home() {
           <div className="flex items-center gap-4">
             <button
               type="button"
-              className="p-2 text-slate-950 transition hover:opacity-70"
+              className="p-2 text-[#E8F9FE] transition hover:opacity-70"
               aria-label="Menu"
             >
               <svg
@@ -349,7 +537,7 @@ export default function Home() {
             </button>
             <button
               type="button"
-              className="p-2 text-slate-950 transition hover:opacity-70"
+              className="p-2 text-[#E8F9FE] transition hover:opacity-70"
               aria-label="Toggle theme"
             >
               <svg
@@ -376,17 +564,17 @@ export default function Home() {
         >
           <NeuralNetworkBackground />
           <div className="relative z-10 mx-auto max-w-4xl text-center">
-            <h1 className="mb-6 text-5xl font-bold leading-tight tracking-tight text-slate-950 sm:text-6xl lg:text-7xl">
+            <h1 className="mb-6 text-5xl font-bold leading-tight tracking-tight text-[#E8F9FE] sm:text-6xl lg:text-7xl">
               Cutting-Edge to Real-World Impact
           </h1>
-            <p className="mx-auto max-w-2xl text-lg leading-relaxed text-slate-800 sm:text-xl">
+            <p className="mx-auto max-w-2xl text-lg leading-relaxed text-[#B6D9E4] sm:text-xl">
               Realizing the potential of AI and novel technologies with expertise,
               innovation, and integrity.
             </p>
             <div className="mt-10">
               <a
                 href="#contact"
-                className="inline-block rounded-full bg-slate-950 px-8 py-4 text-base font-semibold text-[#FFB703] transition hover:bg-slate-900 sm:text-lg"
+                className="inline-block rounded-full bg-slate-950 px-8 py-4 text-base font-semibold text-[#ff6700] transition hover:bg-slate-900 sm:text-lg"
               >
                 Request an introduction call
               </a>
@@ -396,7 +584,7 @@ export default function Home() {
           <div className="absolute bottom-8 left-1/2 -translate-x-1/2">
             <a
               href="#services"
-              className="flex h-12 w-12 items-center justify-center rounded-full bg-slate-950 text-[#FFB703] transition hover:bg-slate-900"
+              className="flex h-12 w-12 items-center justify-center rounded-full bg-slate-950 text-[#ff6700] transition hover:bg-slate-900"
               aria-label="Scroll down"
             >
               <svg
@@ -441,7 +629,7 @@ export default function Home() {
                 At AdvanCPS, we turn complexity into clarity through state-of-the-art solutions. Rooted in deep expertise and driven by curiosity, we help future-focused companies unlock their full potential with tailored solutions and strategies for cutting-edge automation.
               </p>
               <p className="text-base leading-relaxed sm:text-lg">
-                We're not just consultants, we're partners in your digital evolution. From concept to deployment, our team blends academic rigor with real-world impact to ensure an intelligent, ethical and efficient solution.
+                We&apos;re not just consultants, we&apos;re partners in your digital evolution. From concept to deployment, our team blends academic rigor with real-world impact to ensure an intelligent, ethical and efficient solution.
           </p>
         </div>
 
@@ -449,7 +637,7 @@ export default function Home() {
             <div className="flex flex-wrap items-center justify-center gap-4">
           <a
                 href="#process"
-                className="flex items-center gap-2 rounded-lg border-2 border-[#FB8500] bg-transparent px-6 py-3 text-base font-medium text-slate-950 transition hover:bg-[#FFB703]/10"
+                className="flex items-center gap-2 rounded-lg border-2 border-[#ff6700] bg-transparent px-6 py-3 text-base font-medium text-slate-950 transition hover:bg-[#ff6700]/10"
               >
                 <svg
                   className="h-5 w-5"
@@ -468,7 +656,7 @@ export default function Home() {
           </a>
           <a
                 href="#about"
-                className="flex items-center gap-2 rounded-lg border-2 border-[#FB8500] bg-transparent px-6 py-3 text-base font-medium text-slate-950 transition hover:bg-[#FFB703]/10"
+                className="flex items-center gap-2 rounded-lg border-2 border-[#ff6700] bg-transparent px-6 py-3 text-base font-medium text-slate-950 transition hover:bg-[#ff6700]/10"
               >
                 <svg
                   className="h-5 w-5"
@@ -506,7 +694,7 @@ export default function Home() {
                 At AdvanCPS, impactful solutions start with feasibility and context — your business, your data, and your constraints.
               </p>
               <p className="text-base leading-relaxed sm:text-lg">
-                We don't offer one-size-fits-all solutions. We lead with feasibility — aligning your goals, data, and constraints to the right technology and a clear path forward.
+                We don&apos;t offer one-size-fits-all solutions. We lead with feasibility — aligning your goals, data, and constraints to the right technology and a clear path forward.
               </p>
             </div>
 
@@ -519,7 +707,7 @@ export default function Home() {
                     01
                   </span>
                   <svg
-                    className="mb-2 h-8 w-8 text-yellow-400 sm:h-10 sm:w-10"
+                    className="mb-2 h-8 w-8 text-[#ff6700] sm:h-10 sm:w-10"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -561,7 +749,7 @@ export default function Home() {
                     02
                   </span>
                   <svg
-                    className="mb-2 h-8 w-8 text-yellow-400 sm:h-10 sm:w-10"
+                    className="mb-2 h-8 w-8 text-[#ff6700] sm:h-10 sm:w-10"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -603,7 +791,7 @@ export default function Home() {
                     03
                   </span>
                   <svg
-                    className="mb-2 h-8 w-8 text-yellow-400 sm:h-10 sm:w-10"
+                    className="mb-2 h-8 w-8 text-[#ff6700] sm:h-10 sm:w-10"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -645,7 +833,7 @@ export default function Home() {
                     04
                   </span>
                   <svg
-                    className="mb-2 h-8 w-8 text-yellow-400 sm:h-10 sm:w-10"
+                    className="mb-2 h-8 w-8 text-[#ff6700] sm:h-10 sm:w-10"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -687,7 +875,7 @@ export default function Home() {
                     05
                   </span>
                   <svg
-                    className="mb-2 h-8 w-8 text-yellow-400 sm:h-10 sm:w-10"
+                    className="mb-2 h-8 w-8 text-[#ff6700] sm:h-10 sm:w-10"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -737,7 +925,7 @@ export default function Home() {
               <div className="relative rounded-2xl bg-[#023047] p-6">
                 <div className="mb-4">
                   <svg
-                    className="mb-4 h-10 w-10 text-yellow-400"
+                    className="mb-4 h-10 w-10 text-[#ff6700]"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -762,7 +950,7 @@ export default function Home() {
               <div className="relative rounded-2xl bg-[#023047] p-6">
                 <div className="mb-4">
                   <svg
-                    className="mb-4 h-10 w-10 text-yellow-400"
+                    className="mb-4 h-10 w-10 text-[#ff6700]"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -793,7 +981,7 @@ export default function Home() {
               <div className="relative rounded-2xl bg-[#023047] p-6">
                 <div className="mb-4">
                   <svg
-                    className="mb-4 h-10 w-10 text-yellow-400"
+                    className="mb-4 h-10 w-10 text-[#ff6700]"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -818,7 +1006,7 @@ export default function Home() {
               <div className="relative rounded-2xl bg-[#023047] p-6">
                 <div className="mb-4">
                   <svg
-                    className="mb-4 h-10 w-10 text-yellow-400"
+                    className="mb-4 h-10 w-10 text-[#ff6700]"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -843,7 +1031,7 @@ export default function Home() {
               <div className="relative rounded-2xl bg-[#023047] p-6">
                 <div className="mb-4">
                   <svg
-                    className="mb-4 h-10 w-10 text-yellow-400"
+                    className="mb-4 h-10 w-10 text-[#ff6700]"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -868,7 +1056,7 @@ export default function Home() {
               <div className="relative rounded-2xl bg-[#023047] p-6">
                 <div className="mb-4">
                   <svg
-                    className="mb-4 h-10 w-10 text-yellow-400"
+                    className="mb-4 h-10 w-10 text-[#ff6700]"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -894,7 +1082,7 @@ export default function Home() {
             <div className="flex justify-center">
               <a
                 href="#contact"
-                className="flex items-center gap-2 rounded-lg border-2 border-yellow-400 bg-white px-6 py-3 text-base font-medium text-slate-950 transition hover:bg-yellow-400/10"
+                className="flex items-center gap-2 rounded-lg border-2 border-[#ff6700] bg-white px-6 py-3 text-base font-medium text-slate-950 transition hover:bg-[#ff6700]/10"
           >
                 <svg
                   className="h-5 w-5"
@@ -912,6 +1100,236 @@ export default function Home() {
                 <span>Discover Our Expertise</span>
           </a>
         </div>
+          </div>
+        </section>
+
+        {/* Professional Experience Section */}
+        <section
+          id="experience"
+          className="scroll-mt-24 bg-slate-50 py-16 sm:py-20"
+        >
+          <div className="mx-auto max-w-6xl px-6 lg:px-10">
+            <div className="text-center">
+              <p className="text-xs font-semibold tracking-widest text-[#4361ee]">
+                EXPERIENCE
+              </p>
+              <h2 className="mt-3 text-4xl font-bold tracking-tight text-slate-950 sm:text-5xl">
+                Professional Experience
+              </h2>
+              <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-slate-600 sm:text-base">
+                A summary of my work experience and the projects I’ve been
+                involved in.
+                <span className="mt-1 block text-slate-500">
+                  Click any project to see more details.
+                </span>
+              </p>
+            </div>
+
+            <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {visibleExperiences.map((exp) => (
+                <div
+                  key={exp.id}
+                  className="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200 cursor-pointer transition hover:shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-[#4361ee]/40"
+                  role="button"
+                  tabIndex={0}
+                  onClick={() => openExperienceModal(exp.id)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ")
+                      openExperienceModal(exp.id);
+                  }}
+                >
+                  <div className="flex items-start gap-4">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#4361ee]/10 text-[#4361ee]">
+                      <svg
+                        className="h-6 w-6"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                        strokeWidth={2}
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      >
+                        <path d="M12 3v3" />
+                        <path d="M7 7h10" />
+                        <path d="M7 21h10" />
+                        <path d="M8 7v14" />
+                        <path d="M16 7v14" />
+                      </svg>
+                    </div>
+                    <div className="min-w-0">
+                      <h3 className="text-base font-semibold text-slate-900">
+                        {exp.title}
+                      </h3>
+                      <p className="mt-1 text-sm font-medium text-[#4361ee]">
+                        {exp.role}
+                      </p>
+                      <p className="mt-1 text-xs text-slate-500">{exp.period}</p>
+                    </div>
+                  </div>
+
+                  <p className="mt-4 text-sm leading-relaxed text-slate-600 line-clamp-3">
+                    {exp.summary}
+                  </p>
+
+                  <button
+                    type="button"
+                    className="mt-6 flex items-center text-sm font-medium text-[#ff6700]"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      openExperienceModal(exp.id);
+                    }}
+                  >
+                    View details <span className="ml-1 text-base">→</span>
+                  </button>
+                </div>
+              ))}
+            </div>
+
+            {/* Experience companies marquee */}
+            <div className="mt-12">
+              <p className="text-center text-xs font-semibold tracking-widest text-slate-500">
+                Trusted by dozens of companies &amp; enterprises
+              </p>
+
+              <div className="relative mt-6 w-full overflow-hidden rounded-2xl bg-white/70 px-2 py-6 shadow-sm ring-1 ring-slate-200">
+                {/* Soft edge fades */}
+                <div className="pointer-events-none absolute inset-y-0 left-0 w-16 bg-gradient-to-r from-slate-50 to-transparent" />
+                <div className="pointer-events-none absolute inset-y-0 right-0 w-16 bg-gradient-to-l from-slate-50 to-transparent" />
+
+                <div className="experience-marquee flex w-max items-center gap-12 pr-12">
+                  {[...experienceCompanies, ...experienceCompanies].map(
+                    (company, idx) => (
+                      <a
+                        key={`${company.name}-${idx}`}
+                        href={company.href}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="group flex items-center justify-center px-6 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#4361ee]/40 rounded-xl"
+                        aria-label={company.name}
+                        title={company.name}
+                      >
+                        <img
+                          src={company.logoSrc}
+                          alt={`${company.name} logo`}
+                          className="h-10 w-28 object-contain opacity-80 grayscale transition group-hover:opacity-100 group-hover:grayscale-0 sm:h-11 sm:w-32"
+                          loading="lazy"
+                        />
+                      </a>
+                    )
+                  )}
+                </div>
+              </div>
+            </div>
+
+            {/* Experience modal */}
+            <div
+              className={[
+                "fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6",
+                isExperienceModalOpen
+                  ? "pointer-events-auto"
+                  : "pointer-events-none",
+              ].join(" ")}
+              aria-hidden={!isExperienceModalOpen}
+            >
+              <div
+                className={[
+                  "absolute inset-0 bg-slate-950/40 backdrop-blur-[2px] transition-opacity duration-200",
+                  isExperienceModalOpen ? "opacity-100" : "opacity-0",
+                ].join(" ")}
+                onMouseDown={closeExperienceModal}
+              />
+
+              <div
+                role="dialog"
+                aria-modal="true"
+                aria-label="Experience details"
+                className={[
+                  "relative z-10 w-full max-w-2xl rounded-2xl bg-white shadow-2xl ring-1 ring-slate-200",
+                  "transition-all duration-200 ease-out",
+                  isExperienceModalOpen
+                    ? "opacity-100 translate-y-0 scale-100"
+                    : "opacity-0 translate-y-3 scale-[0.98]",
+                ].join(" ")}
+              >
+                <button
+                  type="button"
+                  onClick={closeExperienceModal}
+                  className="absolute right-4 top-4 inline-flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-700 shadow-sm transition hover:bg-slate-50 hover:text-slate-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#4361ee]/40"
+                  aria-label="Close"
+                >
+                  <svg
+                    className="h-5 w-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M6 18L18 6M6 6l12 12"
+                    />
+                  </svg>
+                </button>
+
+                <div className="p-6 sm:p-8">
+                  {activeExperience ? (
+                    <>
+                      <div className="pr-12">
+                        <p className="text-xs font-semibold tracking-widest text-[#4361ee]">
+                          EXPERIENCE
+                        </p>
+                        <h3 className="mt-2 text-xl font-bold tracking-tight text-slate-950 sm:text-2xl">
+                          {activeExperience.title}
+                        </h3>
+                        <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm">
+                          <span className="font-semibold text-slate-900">
+                            {activeExperience.role}
+                          </span>
+                          <span className="text-slate-400">•</span>
+                          <span className="text-slate-600">
+                            {activeExperience.period}
+                          </span>
+                        </div>
+                      </div>
+
+                      <p className="mt-5 text-sm leading-relaxed text-slate-700">
+                        {activeExperience.summary}
+                      </p>
+
+                      <div className="mt-5 space-y-2">
+                        <p className="text-sm font-semibold text-slate-900">
+                          Highlights
+                        </p>
+                        <ul className="list-disc space-y-2 pl-5 text-sm text-slate-700">
+                          {activeExperience.details.map((item) => (
+                            <li key={item}>{item}</li>
+                          ))}
+                        </ul>
+                      </div>
+
+                      <div className="mt-6">
+                        <p className="text-sm font-semibold text-slate-900">
+                          Technologies
+                        </p>
+                        <div className="mt-3 flex flex-wrap gap-2">
+                          {activeExperience.technologies.map((t) => (
+                            <span
+                              key={t}
+                              className="rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-700 ring-1 ring-slate-200"
+                            >
+                              {t}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    </>
+                  ) : (
+                    <div className="text-sm text-slate-600">No details.</div>
+                  )}
+                </div>
+              </div>
+            </div>
           </div>
         </section>
 
@@ -936,7 +1354,7 @@ export default function Home() {
                   Ready to move forward?
                 </h3>
                 <p className="mb-2 text-xl font-bold text-white sm:text-2xl">
-                  Let's build the future together!
+                  Let&apos;s build the future together!
                 </p>
                 <p className="text-sm text-white/90 sm:text-base">
                   Get in touch for a call with our experts.
@@ -947,7 +1365,7 @@ export default function Home() {
               <div className="shrink-0">
                 <a
                   href="#contact"
-                  className="flex items-center gap-2 rounded-full border-2 border-[#FB8500] bg-[#023047] px-6 py-3 text-base font-medium text-white transition hover:bg-[#219EBC]"
+                  className="flex items-center gap-2 rounded-full border-2 border-[#ff6700] bg-[#023047] px-6 py-3 text-base font-medium text-white transition hover:bg-[#219EBC]"
                 >
                   <svg
                     className="h-5 w-5"
@@ -979,7 +1397,7 @@ export default function Home() {
           </h2>
           <div className="mt-6 grid gap-8 md:grid-cols-3">
             <div className="space-y-2 text-sm text-slate-700">
-              <p className="text-[#FB8500] font-semibold">01 · Exploration</p>
+              <p className="text-[#ff6700] font-semibold">01 · Exploration</p>
               <p className="font-semibold text-slate-950">
                 Understand your challenges
               </p>
@@ -989,7 +1407,7 @@ export default function Home() {
               </p>
             </div>
             <div className="space-y-2 text-sm text-slate-700">
-              <p className="text-[#FB8500] font-semibold">02 · Proposal</p>
+              <p className="text-[#ff6700] font-semibold">02 · Proposal</p>
               <p className="font-semibold text-slate-950">
                 Concrete, transparent plan
               </p>
@@ -999,7 +1417,7 @@ export default function Home() {
               </p>
             </div>
             <div className="space-y-2 text-sm text-slate-700">
-              <p className="text-[#FB8500] font-semibold">03 · Execution</p>
+              <p className="text-[#ff6700] font-semibold">03 · Execution</p>
               <p className="font-semibold text-slate-950">
                 Co‑creation with your team
               </p>
@@ -1125,7 +1543,7 @@ export default function Home() {
                       id="firstName"
                       type="text"
                       autoComplete="given-name"
-                      className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-950 outline-none ring-[#FFB703]/60 placeholder:text-slate-400 focus:border-[#FFB703] focus:ring-2"
+                  className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-950 outline-none ring-[#ff6700]/60 placeholder:text-slate-400 focus:border-[#ff6700] focus:ring-2"
                       placeholder="John"
                       value={firstName}
                       onChange={(e) => setFirstName(e.target.value)}
@@ -1142,7 +1560,7 @@ export default function Home() {
                       id="lastName"
                       type="text"
                       autoComplete="family-name"
-                      className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-950 outline-none ring-[#FFB703]/60 placeholder:text-slate-400 focus:border-[#FFB703] focus:ring-2"
+                  className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-950 outline-none ring-[#ff6700]/60 placeholder:text-slate-400 focus:border-[#ff6700] focus:ring-2"
                       placeholder="Doe"
                       value={lastName}
                       onChange={(e) => setLastName(e.target.value)}
@@ -1161,7 +1579,7 @@ export default function Home() {
                     id="email"
                     type="email"
                     autoComplete="email"
-                    className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-950 outline-none ring-[#FFB703]/60 placeholder:text-slate-400 focus:border-[#FFB703] focus:ring-2"
+                  className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-950 outline-none ring-[#ff6700]/60 placeholder:text-slate-400 focus:border-[#ff6700] focus:ring-2"
                     placeholder="you@company.com"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
@@ -1179,7 +1597,7 @@ export default function Home() {
                     id="phone"
                     type="tel"
                     autoComplete="tel"
-                    className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-950 outline-none ring-[#FFB703]/60 placeholder:text-slate-400 focus:border-[#FFB703] focus:ring-2"
+                  className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-950 outline-none ring-[#ff6700]/60 placeholder:text-slate-400 focus:border-[#ff6700] focus:ring-2"
                     placeholder="+1 555 000 1234"
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
@@ -1195,7 +1613,7 @@ export default function Home() {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="inline-flex w-full items-center justify-center rounded-full bg-slate-950 px-5 py-2.5 text-sm font-semibold text-[#FFB703] transition hover:bg-slate-900 disabled:cursor-not-allowed disabled:opacity-70"
+                  className="inline-flex w-full items-center justify-center rounded-full bg-slate-950 px-5 py-2.5 text-sm font-semibold text-[#ff6700] transition hover:bg-slate-900 disabled:cursor-not-allowed disabled:opacity-70"
                 >
                   {isSubmitting ? "Preparing Calendly..." : "Continue to calendar"}
                 </button>
@@ -1217,7 +1635,7 @@ export default function Home() {
                   <button
                     type="button"
                     onClick={() => setStep("form")}
-                  className="text-xs text-[#FB8500] hover:text-[#FFB703]"
+                  className="text-xs text-[#ff6700] hover:text-[#ff6700]"
                   >
                     Edit contact details
                   </button>
@@ -1250,7 +1668,7 @@ export default function Home() {
       </main>
 
       {/* Footer */}
-      <footer className="bg-[#FB8500] py-12">
+      <footer className="bg-[#ff6700] py-12">
         <div className="mx-auto max-w-6xl px-6 lg:px-10">
           {/* Logo */}
           <div className="mb-8 flex justify-center">
@@ -1315,6 +1733,14 @@ export default function Home() {
                 </li>
                 <li>
                   <a
+                    href="#experience"
+                    className="text-sm text-slate-950 transition hover:opacity-70"
+                  >
+                    Experience
+                  </a>
+                </li>
+                <li>
+                  <a
                     href="#about"
                     className="text-sm text-slate-950 transition hover:opacity-70"
                   >
@@ -1371,7 +1797,7 @@ export default function Home() {
                   href="https://be.linkedin.com"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex h-10 w-10 items-center justify-center rounded-full border-2 border-slate-950 text-slate-950 transition hover:bg-slate-950 hover:text-yellow-400"
+                  className="flex h-10 w-10 items-center justify-center rounded-full border-2 border-slate-950 text-slate-950 transition hover:bg-slate-950 hover:text-[#ff6700]"
                   aria-label="LinkedIn"
                 >
                   <svg
@@ -1386,7 +1812,7 @@ export default function Home() {
                   href="https://instagram.com"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex h-10 w-10 items-center justify-center rounded-full border-2 border-slate-950 text-slate-950 transition hover:bg-slate-950 hover:text-yellow-400"
+                  className="flex h-10 w-10 items-center justify-center rounded-full border-2 border-slate-950 text-slate-950 transition hover:bg-slate-950 hover:text-[#ff6700]"
                   aria-label="Instagram"
                 >
                   <svg
@@ -1401,7 +1827,7 @@ export default function Home() {
                   href="https://youtube.com"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex h-10 w-10 items-center justify-center rounded-full border-2 border-slate-950 text-slate-950 transition hover:bg-slate-950 hover:text-yellow-400"
+                  className="flex h-10 w-10 items-center justify-center rounded-full border-2 border-slate-950 text-slate-950 transition hover:bg-slate-950 hover:text-[#ff6700]"
                   aria-label="YouTube"
                 >
                   <svg
@@ -1414,7 +1840,7 @@ export default function Home() {
                 </a>
                 <a
                   href="#contact"
-                  className="flex h-10 w-10 items-center justify-center rounded-full border-2 border-slate-950 text-slate-950 transition hover:bg-slate-950 hover:text-yellow-400"
+                  className="flex h-10 w-10 items-center justify-center rounded-full border-2 border-slate-950 text-slate-950 transition hover:bg-slate-950 hover:text-[#ff6700]"
                   aria-label="Contact"
                 >
                   <svg
@@ -1503,7 +1929,7 @@ export default function Home() {
               {/* Main Text */}
               <p className="mb-6 text-sm leading-relaxed text-slate-700">
                 We use essential cookies to make our site work. With your
-                consent, we'll also use analytics and marketing cookies to
+                consent, we&apos;ll also use analytics and marketing cookies to
                 improve your experience. You can change your choices at any
                 time. See our{" "}
                 <a
@@ -1532,7 +1958,7 @@ export default function Home() {
                   </button>
                   <button
                     onClick={handleAcceptCookies}
-                    className="rounded-lg bg-yellow-400 px-5 py-2.5 text-sm font-semibold text-slate-950 transition hover:bg-yellow-500"
+                    className="rounded-lg bg-[#ff6700] px-5 py-2.5 text-sm font-semibold text-slate-950 transition hover:opacity-90"
                   >
                     Accept all
                   </button>
