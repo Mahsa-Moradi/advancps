@@ -223,6 +223,19 @@ export default function Home() {
     null
   );
   const [isExperienceModalOpen, setIsExperienceModalOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  const navLinks = useMemo(
+    () => [
+      { href: "#home", label: "Home" },
+      { href: "#services", label: "Our Expertise" },
+      { href: "#experience", label: "Experience" },
+      { href: "#process", label: "About Us" },
+      { href: "#cases", label: "Careers" },
+      { href: "#contact", label: "Contact" },
+    ],
+    []
+  );
 
   const experiences = useMemo(
     () => [
@@ -449,6 +462,24 @@ export default function Home() {
     setShowCookieBanner(false);
   };
 
+  useEffect(() => {
+    if (!isMobileMenuOpen) return;
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setIsMobileMenuOpen(false);
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [isMobileMenuOpen]);
+
+  useEffect(() => {
+    if (!isMobileMenuOpen) return;
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = prevOverflow;
+    };
+  }, [isMobileMenuOpen]);
+
   const handleCloseBanner = () => {
     localStorage.setItem("cookieConsent", "dismissed");
     setShowCookieBanner(false);
@@ -496,30 +527,20 @@ export default function Home() {
             />
           </div>
           <nav className="hidden p-5 md:px-15 items-center gap-8 text-sm font-medium text-[#E8F9FE] md:flex">
-            <a href="#home" className="transition hover:opacity-70">
-              Home
-            </a>
-            <a href="#services" className="transition hover:opacity-70">
-              Our Expertise
-            </a>
-            <a href="#experience" className="transition hover:opacity-70">
-              Experience
-            </a>
-            <a href="#process" className="transition hover:opacity-70">
-              About Us
-            </a>
-            <a href="#cases" className="transition hover:opacity-70">
-              Careers
-            </a>
-            <a href="#contact" className="transition hover:opacity-70">
-              Contact
-            </a>
+            {navLinks.map((l) => (
+              <a key={l.href} href={l.href} className="transition hover:opacity-70">
+                {l.label}
+              </a>
+            ))}
           </nav>
           <div className="flex items-center gap-4">
             <button
               type="button"
-              className="p-2 text-[#E8F9FE] transition hover:opacity-70"
+              className="p-2 text-[#E8F9FE] transition hover:opacity-70 md:hidden"
               aria-label="Menu"
+              aria-expanded={isMobileMenuOpen}
+              aria-controls="mobile-menu"
+              onClick={() => setIsMobileMenuOpen((v) => !v)}
             >
               <svg
                 className="h-6 w-6"
@@ -556,6 +577,73 @@ export default function Home() {
             </button>
           </div>
         </header>
+
+        {/* Mobile menu (overlay + drawer) */}
+        <div
+          id="mobile-menu"
+          className={[
+            "fixed inset-0 z-50 md:hidden",
+            isMobileMenuOpen ? "pointer-events-auto" : "pointer-events-none",
+          ].join(" ")}
+          aria-hidden={!isMobileMenuOpen}
+        >
+          <button
+            type="button"
+            className={[
+              "absolute inset-0 bg-slate-950/60 transition-opacity",
+              isMobileMenuOpen ? "opacity-100" : "opacity-0",
+            ].join(" ")}
+            aria-label="Close menu"
+            onClick={() => setIsMobileMenuOpen(false)}
+          />
+          <aside
+            className={[
+              "absolute right-0 top-0 h-full w-[min(85vw,360px)] border-l border-slate-100/10 bg-[#023047] p-6 shadow-2xl transition-transform",
+              isMobileMenuOpen ? "translate-x-0" : "translate-x-full",
+            ].join(" ")}
+            role="dialog"
+            aria-modal="true"
+          >
+            <div className="flex items-center justify-between">
+              <span className="text-sm font-semibold tracking-wide text-[#E8F9FE]">
+                Menu
+              </span>
+              <button
+                type="button"
+                className="rounded-md p-2 text-[#E8F9FE] transition hover:opacity-70"
+                aria-label="Close menu"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                <svg
+                  className="h-6 w-6"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              </button>
+            </div>
+
+            <nav className="mt-8 flex flex-col gap-2 text-base font-medium">
+              {navLinks.map((l) => (
+                <a
+                  key={l.href}
+                  href={l.href}
+                  className="rounded-lg px-3 py-3 text-[#E8F9FE] transition hover:bg-slate-950/30"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  {l.label}
+                </a>
+              ))}
+            </nav>
+          </aside>
+        </div>
 
         {/* Hero section */}
         <section
