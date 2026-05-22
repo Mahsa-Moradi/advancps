@@ -20,7 +20,7 @@ const CALENDLY_EVENT_URL =
 // **************************************
 type Step = "form" | "calendly";
 
-/** Set to `true` to show every card in Professional Experience; `false` shows only IMEC (id 1). */
+/** Set to `true` to show every card in Professional Experience; `false` shows only Scalian (id 1). */
 const SHOW_ALL_PROFESSIONAL_EXPERIENCES = false;
 
 // Neural Network Background Component
@@ -242,18 +242,16 @@ export default function Home() {
       {
         id: 1,
         title: "Photonic Measurement & Instrument Automation",
-        role: "IMEC",
+        role: "Scalian",
         period: "2023 - Present",
         summary:
-          "End-to-end automation of complex photonic measurement systems, instrument control (wafer prober setups), and high‑volume data workflows—with AI-driven anomaly detection and automated quality control to improve reliability and data integrity.",
+          "The main responsibilities include designing and deploying a robust Python-based framework to control laboratory instruments — including wafer prober systems — through protocols such as GPIB and Ethernet. This work bridges the gap between hardware and data by developing automated workflows for experiment scheduling and high-volume data processing. By implementing AI-driven anomaly detection and automated quality control mechanisms, the system reliability and integrity of critical experimental data have significantly improved.",
         details: [
-          "Built and deployed a robust Python framework to control laboratory instruments (including wafer prober systems) via GPIB and Ethernet.",
-          "Developed a modular custom instrument control library (GPIB, RS232, Ethernet) enabling plug‑and‑play integration for new instruments.",
-          "Implemented an automated photonic testing suite tailored for wafer probers, reducing manual intervention in measurements.",
-          "Designed an automated processing pipeline for high‑volume experimental data with real‑time, AI‑driven anomaly detection to flag measurement errors.",
-          "Created automated quality control and reporting/dashboard capabilities for logging and monitoring system health for 24/7 long‑running tasks.",
-          "Introduced an experiment scheduler to automate experiment scheduling and improve workflow throughput.",
-          "Maintained a version‑controlled codebase (Git) with documentation and deployment guides to support long‑term collaboration.",
+          "Custom Instrument Control Library: A modular Python library developed to interface with laboratory hardware via GPIB, RS232, and Ethernet, enabling plug-and-play integration of new instruments.",
+          "Automated Photonic Testing Suite: A specialized automation framework designed for wafer prober systems, reducing manual intervention in photonic measurements.",
+          "Pipeline & QC Engine: An automated processing pipeline handling high-volume experimental data, featuring built-in AI-driven anomaly detection to identify measurement errors in real time.",
+          "Automated Reporting Dashboard: A monitoring and logging system ensuring the 24/7 reliability of long-running experimental tasks.",
+          "Software and Infrastructure Maintenance: Maintaining a version-controlled codebase (Git) with documentation and deployment guides to support long-term collaboration.",
         ],
         technologies: [
           "Python",
